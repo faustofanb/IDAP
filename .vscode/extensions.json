@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "EditorConfig.EditorConfig",
+    "eamodio.gitlens",
+    "sonarsource.sonarlint-vscode",
+    "ms-azuretools.vscode-docker",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "redhat.vscode-yaml"
+  ],
+  "unwantedRecommendations": []
+}

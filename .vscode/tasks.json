@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build (Maven)",
+      "type": "shell",
+      "command": "mvn",
+      "args": ["-q", "-DskipTests", "package"],
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Build Java Server",
+      "type": "shell",
+      "command": "mvn",
+      "args": ["-q", "-DskipTests", "package"],
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/java-server"
+      }
+    },
+    {
+      "label": "Run Java Server",
+      "type": "shell",
+      "command": "java",
+      "args": ["-jar", "target/idap-java-server.jar"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend/java-server"
+      }
+    }
+  ]
+}

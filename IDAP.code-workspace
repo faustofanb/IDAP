@@ -1,0 +1,70 @@
+{
+  "folders": [
+    { "path": "." }
+  ],
+  "settings": {
+    "files.eol": "\n",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/target": true,
+      "**/build": true,
+      "**/.idea": true,
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true
+    },
+    "search.exclude": {
+      "**/target": true,
+      "**/build": true,
+      "**/.venv": true,
+      "**/__pycache__": true
+    },
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.gradle.enabled": false,
+    "java.compile.nullAnalysis.mode": "automatic"
+  },
+  "extensions": {
+    "recommendations": [
+      "vscjava.vscode-java-pack",
+      "EditorConfig.EditorConfig",
+      "eamodio.gitlens",
+      "sonarsource.sonarlint-vscode",
+      "ms-azuretools.vscode-docker",
+      "yzhang.markdown-all-in-one",
+      "davidanson.vscode-markdownlint",
+      "redhat.vscode-yaml"
+    ],
+    "unwantedRecommendations": []
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build Java Server",
+        "type": "shell",
+        "command": "mvn",
+        "args": ["-q", "-DskipTests", "package"],
+        "group": "build",
+        "options": {
+          "cwd": "${workspaceFolder}/backend/java-server"
+        }
+      },
+      {
+        "label": "Run Java Server",
+        "type": "shell",
+        "command": "java",
+        "args": ["-jar", "target/idap-java-server.jar"],
+        "options": {
+          "cwd": "${workspaceFolder}/backend/java-server"
+        }
+      }
+    ]
+  }
+}
