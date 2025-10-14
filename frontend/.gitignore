@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.env.local
+
+# MacOS
+.DS_Store

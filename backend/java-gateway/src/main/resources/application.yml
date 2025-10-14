@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: idap-gateway
+
+  # 数据库配置
+  datasource:
+    url: jdbc:postgresql://localhost:5432/idap
+    username: idap
+    password: ${DB_PASSWORD:idap123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA 配置
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Redis 配置
+  redis:
+    host: localhost
+    port: 6379
+    password: ${REDIS_PASSWORD:}
+    timeout: 3000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+
+# Server 配置
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+# JWT 配置
+jwt:
+  secret: ${JWT_SECRET:idap-secret-key-change-in-production}
+  expiration: 86400 # 24 小时
+
+# Python AI Engine 配置
+python-ai:
+  websocket-url: ws://localhost:8001/ws
+  connection-timeout: 60000
+  reconnect-interval: 5000
+
+# Resilience4j 配置
+resilience4j:
+  ratelimiter:
+    instances:
+      query:
+        limit-for-period: 10
+        limit-refresh-period: 60s
+        timeout-duration: 0s
+
+# Actuator 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.idap: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: WARN

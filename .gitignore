@@ -79,3 +79,4 @@ coverage/
 ############################
 *.swp
 *.swo
+frontend/pnpm-lock.yaml
