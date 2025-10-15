@@ -64,10 +64,11 @@ cp .env.example .env
 ### 3. 启动服务
 
 ```bash
-# 激活虚拟环境
-source .venv/bin/activate
+# 使用启动脚本（推荐）
+../../scripts/dev/01-run-python-ai.sh
 
-# 开发模式
+# 或手动启动
+source .venv/bin/activate
 python src/main.py
 
 # 或使用 uvicorn

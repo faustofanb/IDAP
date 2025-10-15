@@ -1,0 +1,55 @@
+# 开发环境简化版 - 只包含必需服务
+# 使用方式: docker-compose -f docker-compose.dev.yml up -d
+
+services:
+  # PostgreSQL 16 - 主数据库
+  postgres:
+    image: postgres:16-alpine
+    container_name: idap-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: idap
+      POSTGRES_USER: idap
+      POSTGRES_PASSWORD: idap123
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ../../database/init-db.sh:/docker-entrypoint-initdb.d/00-init.sh:ro
+      - ../../database/migrations:/docker-entrypoint-initdb.d/migrations:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U idap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - idap-dev-network
+
+  # Redis 7 - 缓存与会话存储
+  redis:
+    image: redis:7-alpine
+    container_name: idap-redis-dev
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass idap123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - idap-dev-network
+
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+
+networks:
+  idap-dev-network:
+    driver: bridge

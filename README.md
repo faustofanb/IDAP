@@ -104,6 +104,52 @@ PostgreSQL / Redis / Milvus│                     Port 3000                    
 
 - LangChain + LangGraph (AI 编排)
 
+---
+
+## 🚀 快速开始
+
+### 1. 启动依赖服务
+
+```bash
+# 启动 Docker 服务（PostgreSQL + Redis）
+./scripts/docker/01-docker-manager.sh start-dev
+
+# 查看服务状态
+./scripts/docker/01-docker-manager.sh status
+
+# 访问管理界面
+# - pgAdmin: http://localhost:5050 (admin@idap.local / admin123)
+# - Redis Commander: http://localhost:8081
+```
+
+💡 详细说明见 [Docker 快速入门](docs/04-Docker快速入门.md) 和 [Docker 环境配置](docs/07-Docker环境配置.md)
+
+### 2. 启动后端服务
+
+#### Java Gateway (Port 8080)
+```bash
+cd backend/java-gateway
+mvn spring-boot:run
+```
+
+#### Python AI Engine (Port 8001)
+```bash
+cd backend/python-ai-engine
+source .venv/bin/activate
+python src/main.py
+```
+
+### 3. 启动前端
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+# 访问 http://localhost:3000
+```
+
+---
+
 ## 🚀 技术栈- PostgreSQL 16+ (主数据库)
 
 - Redis 7+ (缓存)
