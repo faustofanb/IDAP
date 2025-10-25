@@ -30,8 +30,9 @@ onMounted(async () => {
 
         <el-alert title="欢迎使用 IDAP 管理系统" type="success" :closable="false" show-icon>
             <template #default>
-                当前租户：<strong>{{ userStore.userInfo?.tenantName }}</strong> |
-                登录用户：<strong>{{ userStore.realName }}</strong>
+                当前租户：<strong>{{ userStore.userInfo?.tenantName }}</strong> | 登录用户：<strong
+                    >{{ userStore.realName }}</strong
+                >
             </template>
         </el-alert>
 

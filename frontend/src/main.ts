@@ -4,13 +4,18 @@
  * - 全局组件与插件注册
  * - Element Plus 引入
  */
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import './assets/styles/index.css'
+
+// 开发环境启用 Mock 数据
+if (import.meta.env.DEV) {
+    import('./mock')
+}
 
 import App from './App.vue'
 import router from './router'
@@ -40,4 +45,3 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 // 挂载应用
 app.mount('#app')
-

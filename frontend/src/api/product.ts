@@ -6,7 +6,8 @@ import request from './request'
 
 // 类型定义
 type ProductListParams = paths['/products']['get']['parameters']['query']
-type ProductListResponse = paths['/products']['get']['responses']['200']['content']['application/json']
+type ProductListResponse =
+    paths['/products']['get']['responses']['200']['content']['application/json']
 type ProductCreateRequest = paths['/products']['post']['requestBody']['content']['application/json']
 
 /**

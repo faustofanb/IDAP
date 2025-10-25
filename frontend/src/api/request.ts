@@ -3,7 +3,12 @@
  * 统一处理请求拦截、响应拦截、错误处理和租户上下文
  */
 import { useUserStore } from '@/stores/user'
-import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import axios, {
+    type AxiosError,
+    type AxiosInstance,
+    type AxiosRequestConfig,
+    type AxiosResponse
+} from 'axios'
 import { ElMessage } from 'element-plus'
 
 // API 基础配置

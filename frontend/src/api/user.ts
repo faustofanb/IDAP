@@ -8,9 +8,11 @@ import request from './request'
 type UserListParams = paths['/users']['get']['parameters']['query']
 type UserListResponse = paths['/users']['get']['responses']['200']['content']['application/json']
 type UserCreateRequest = paths['/users']['post']['requestBody']['content']['application/json']
-type UserDetailResponse = paths['/users/{id}']['get']['responses']['200']['content']['application/json']
+type UserDetailResponse =
+    paths['/users/{id}']['get']['responses']['200']['content']['application/json']
 type UserUpdateRequest = paths['/users/{id}']['put']['requestBody']['content']['application/json']
-type ResetPasswordRequest = paths['/users/{id}/reset-password']['post']['requestBody']['content']['application/json']
+type ResetPasswordRequest =
+    paths['/users/{id}/reset-password']['post']['requestBody']['content']['application/json']
 
 /**
  * 获取用户列表（分页）

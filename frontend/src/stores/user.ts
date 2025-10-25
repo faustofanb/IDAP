@@ -66,9 +66,43 @@ export const useUserStore = defineStore('user', () => {
 
     /**
      * 检查权限
+     * 支持通配符 (*:*:*)
      */
     function hasPermission(permission: string): boolean {
-        return permissions.value.includes(permission)
+        const perms = permissions.value
+
+        // 如果有超级管理员权限，直接通过
+        if (perms.includes('*:*:*')) {
+            return true
+        }
+
+        // 精确匹配
+        if (perms.includes(permission)) {
+            return true
+        }
+
+        // 通配符匹配
+        const parts = permission.split(':')
+        for (const perm of perms) {
+            const permParts = perm.split(':')
+            let matched = true
+
+            for (let i = 0; i < Math.max(parts.length, permParts.length); i++) {
+                const part = parts[i] || ''
+                const permPart = permParts[i] || ''
+
+                if (permPart !== '*' && part !== permPart) {
+                    matched = false
+                    break
+                }
+            }
+
+            if (matched) {
+                return true
+            }
+        }
+
+        return false
     }
 
     /**

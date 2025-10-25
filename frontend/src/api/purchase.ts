@@ -6,9 +6,12 @@ import request from './request'
 
 // 类型定义
 type PurchaseOrderListParams = paths['/purchase/orders']['get']['parameters']['query']
-type PurchaseOrderListResponse = paths['/purchase/orders']['get']['responses']['200']['content']['application/json']
-type PurchaseOrderCreateRequest = paths['/purchase/orders']['post']['requestBody']['content']['application/json']
-type PurchaseOrderDetailResponse = paths['/purchase/orders/{id}']['get']['responses']['200']['content']['application/json']
+type PurchaseOrderListResponse =
+    paths['/purchase/orders']['get']['responses']['200']['content']['application/json']
+type PurchaseOrderCreateRequest =
+    paths['/purchase/orders']['post']['requestBody']['content']['application/json']
+type PurchaseOrderDetailResponse =
+    paths['/purchase/orders/{id}']['get']['responses']['200']['content']['application/json']
 
 /**
  * 获取采购订单列表（分页）

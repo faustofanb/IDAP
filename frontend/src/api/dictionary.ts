@@ -6,8 +6,10 @@ import request from './request'
 
 // 类型定义
 type DictTypeListParams = paths['/dict/types']['get']['parameters']['query']
-type DictTypeListResponse = paths['/dict/types']['get']['responses']['200']['content']['application/json']
-type DictDataListResponse = paths['/dict/data/{dictCode}']['get']['responses']['200']['content']['application/json']
+type DictTypeListResponse =
+    paths['/dict/types']['get']['responses']['200']['content']['application/json']
+type DictDataListResponse =
+    paths['/dict/data/{dictCode}']['get']['responses']['200']['content']['application/json']
 
 /**
  * 获取字典类型列表

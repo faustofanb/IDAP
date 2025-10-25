@@ -86,7 +86,11 @@ const menuItems = [
                                 </el-icon>
                                 <span>{{ item.title }}</span>
                             </template>
-                            <el-menu-item v-for="child in item.children" :key="child.path" :index="child.path">
+                            <el-menu-item
+                                v-for="child in item.children"
+                                :key="child.path"
+                                :index="child.path"
+                            >
                                 {{ child.title }}
                             </el-menu-item>
                         </el-sub-menu>

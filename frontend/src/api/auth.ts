@@ -7,7 +7,8 @@ import request from './request'
 // 类型定义
 type LoginRequest = paths['/auth/login']['post']['requestBody']['content']['application/json']
 type LoginResponse = paths['/auth/login']['post']['responses']['200']['content']['application/json']
-type UserInfoResponse = paths['/auth/userinfo']['get']['responses']['200']['content']['application/json']
+type UserInfoResponse =
+    paths['/auth/userinfo']['get']['responses']['200']['content']['application/json']
 
 /**
  * 用户登录

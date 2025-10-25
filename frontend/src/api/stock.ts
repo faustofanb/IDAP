@@ -8,7 +8,8 @@ import request from './request'
 type StockListParams = paths['/stocks']['get']['parameters']['query']
 type StockListResponse = paths['/stocks']['get']['responses']['200']['content']['application/json']
 type StockLogParams = paths['/stocks/logs']['get']['parameters']['query']
-type StockLogResponse = paths['/stocks/logs']['get']['responses']['200']['content']['application/json']
+type StockLogResponse =
+    paths['/stocks/logs']['get']['responses']['200']['content']['application/json']
 
 /**
  * 获取库存列表（分页）

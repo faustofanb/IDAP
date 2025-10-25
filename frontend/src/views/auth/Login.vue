@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { login } from '@/api/auth'
 import { useUserStore } from '@/stores/user'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
@@ -26,9 +27,7 @@ const rules: FormRules = {
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 6, max: 20, message: '密码长度在 6 到 20 个字符', trigger: 'blur' }
     ],
-    tenantCode: [
-        { required: true, message: '请输入租户代码', trigger: 'blur' }
-    ]
+    tenantCode: [{ required: true, message: '请输入租户代码', trigger: 'blur' }]
 }
 
 // 加载状态
@@ -44,25 +43,23 @@ const handleLogin = async () => {
         loading.value = true
 
         try {
-            // TODO: 调用登录 API
-            // const response = await loginApi(loginForm)
-
-            // 模拟登录成功
-            await new Promise(resolve => setTimeout(resolve, 1000))
+            // 调用登录 API
+            const response = await login(loginForm)
+            const { token, refreshToken, userInfo } = (response.data as any) || {}
 
             // 设置 Token 和用户信息
-            userStore.setToken('mock-jwt-token', 'mock-refresh-token')
+            userStore.setToken(token, refreshToken)
             userStore.setUserInfo({
-                id: '1',
-                username: loginForm.username,
-                realName: '管理员',
-                email: 'admin@example.com',
-                phone: '13800138000',
-                avatar: '',
-                tenantId: '1',
-                tenantName: '默认租户',
-                roles: ['admin'],
-                permissions: ['*:*:*']
+                id: String(userInfo.id),
+                username: userInfo.username,
+                realName: userInfo.realName,
+                email: userInfo.email,
+                phone: userInfo.phone,
+                avatar: userInfo.avatar || '',
+                tenantId: String(userInfo.tenantId),
+                tenantName: userInfo.tenantName,
+                roles: userInfo.roles || [],
+                permissions: userInfo.permissions || []
             })
 
             ElMessage.success('登录成功')
@@ -71,6 +68,7 @@ const handleLogin = async () => {
             const redirect = router.currentRoute.value.query.redirect as string
             router.push(redirect || '/dashboard')
         } catch (error) {
+            console.error('登录失败:', error)
             ElMessage.error('登录失败，请检查用户名和密码')
         } finally {
             loading.value = false
@@ -87,23 +85,50 @@ const handleLogin = async () => {
                 <p class="subtitle">智能数据询问平台 - 进销存管理</p>
             </div>
 
-            <el-form ref="loginFormRef" :model="loginForm" :rules="rules" class="login-form" @keyup.enter="handleLogin">
+            <el-form
+                ref="loginFormRef"
+                :model="loginForm"
+                :rules="rules"
+                class="login-form"
+                @keyup.enter="handleLogin"
+            >
                 <el-form-item prop="tenantCode">
-                    <el-input v-model="loginForm.tenantCode" placeholder="租户代码" size="large"
-                        prefix-icon="OfficeBuilding" />
+                    <el-input
+                        v-model="loginForm.tenantCode"
+                        placeholder="租户代码"
+                        size="large"
+                        prefix-icon="OfficeBuilding"
+                    />
                 </el-form-item>
 
                 <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" placeholder="用户名" size="large" prefix-icon="User" />
+                    <el-input
+                        v-model="loginForm.username"
+                        placeholder="用户名"
+                        size="large"
+                        prefix-icon="User"
+                    />
                 </el-form-item>
 
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" placeholder="密码" size="large"
-                        prefix-icon="Lock" show-password />
+                    <el-input
+                        v-model="loginForm.password"
+                        type="password"
+                        placeholder="密码"
+                        size="large"
+                        prefix-icon="Lock"
+                        show-password
+                    />
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button type="primary" size="large" :loading="loading" class="login-button" @click="handleLogin">
+                    <el-button
+                        type="primary"
+                        size="large"
+                        :loading="loading"
+                        class="login-button"
+                        @click="handleLogin"
+                    >
                         登 录
                     </el-button>
                 </el-form-item>

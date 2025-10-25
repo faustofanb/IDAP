@@ -4,387 +4,387 @@
  */
 
 export interface paths {
-    "/auth/login": {
+    '/auth/login': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * 用户登录
          * @description 使用租户代码、用户名和密码登录系统
          */
-        post: operations["login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/logout": {
+        post: operations['login']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/auth/logout': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * 用户登出
          * @description 登出系统，清除 Token
          */
-        post: operations["logout"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/refresh": {
+        post: operations['logout']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/auth/refresh': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /**
          * 刷新 Token
          * @description 使用 Refresh Token 刷新访问令牌
          */
-        post: operations["refreshToken"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/userinfo": {
+        post: operations['refreshToken']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/auth/userinfo': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * 获取当前用户信息
          * @description 获取当前登录用户的详细信息
          */
-        get: operations["getUserInfo"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants": {
+        get: operations['getUserInfo']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/tenants': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * 查询租户列表
          * @description 分页查询租户列表（仅超级管理员）
          */
-        get: operations["listTenants"];
-        put?: never;
+        get: operations['listTenants']
+        put?: never
         /**
          * 创建租户
          * @description 创建新租户（仅超级管理员）
          */
-        post: operations["createTenant"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tenants/{id}": {
+        post: operations['createTenant']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/tenants/{id}': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 获取租户详情 */
-        get: operations["getTenant"];
+        get: operations['getTenant']
         /** 更新租户 */
-        put: operations["updateTenant"];
-        post?: never;
+        put: operations['updateTenant']
+        post?: never
         /**
          * 删除租户
          * @description 软删除租户（仅超级管理员）
          */
-        delete: operations["deleteTenant"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users": {
+        delete: operations['deleteTenant']
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/users': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询用户列表 */
-        get: operations["listUsers"];
-        put?: never;
+        get: operations['listUsers']
+        put?: never
         /** 创建用户 */
-        post: operations["createUser"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{id}": {
+        post: operations['createUser']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/users/{id}': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 获取用户详情 */
-        get: operations["getUser"];
+        get: operations['getUser']
         /** 更新用户 */
-        put: operations["updateUser"];
-        post?: never;
+        put: operations['updateUser']
+        post?: never
         /** 删除用户 */
-        delete: operations["deleteUser"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{id}/reset-password": {
+        delete: operations['deleteUser']
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/users/{id}/reset-password': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /** 重置用户密码 */
-        post: operations["resetPassword"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dict/types": {
+        post: operations['resetPassword']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/dict/types': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询字典类型列表 */
-        get: operations["listDictTypes"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dict/data/{dictCode}": {
+        get: operations['listDictTypes']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/dict/data/{dictCode}': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * 根据字典编码获取字典数据
          * @description 前端下拉框、标签显示等场景使用
          */
-        get: operations["getDictData"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/dict/label/{dictCode}/{dictValue}": {
+        get: operations['getDictData']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/dict/label/{dictCode}/{dictValue}': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /**
          * 根据字典值获取标签
          * @description 用于列表显示时翻译字典值
          */
-        get: operations["getDictLabel"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/products": {
+        get: operations['getDictLabel']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/products': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询商品列表 */
-        get: operations["listProducts"];
-        put?: never;
+        get: operations['listProducts']
+        put?: never
         /** 创建商品 */
-        post: operations["createProduct"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/stocks": {
+        post: operations['createProduct']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/stocks': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询库存列表 */
-        get: operations["listStocks"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/stocks/logs": {
+        get: operations['listStocks']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/stocks/logs': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询库存流水 */
-        get: operations["listStockLogs"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase/orders": {
+        get: operations['listStockLogs']
+        put?: never
+        post?: never
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/purchase/orders': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 查询采购订单列表 */
-        get: operations["listPurchaseOrders"];
-        put?: never;
+        get: operations['listPurchaseOrders']
+        put?: never
         /** 创建采购订单 */
-        post: operations["createPurchaseOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase/orders/{id}": {
+        post: operations['createPurchaseOrder']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/purchase/orders/{id}': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         /** 获取采购订单详情 */
-        get: operations["getPurchaseOrder"];
-        put?: never;
-        post?: never;
+        get: operations['getPurchaseOrder']
+        put?: never
+        post?: never
         /**
          * 删除采购订单
          * @description 仅草稿状态可删除
          */
-        delete: operations["deletePurchaseOrder"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase/orders/{id}/submit": {
+        delete: operations['deletePurchaseOrder']
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/purchase/orders/{id}/submit': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /** 提交采购订单审核 */
-        post: operations["submitPurchaseOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase/orders/{id}/approve": {
+        post: operations['submitPurchaseOrder']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/purchase/orders/{id}/approve': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /** 审核通过采购订单 */
-        post: operations["approvePurchaseOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/purchase/orders/{id}/reject": {
+        post: operations['approvePurchaseOrder']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
+    '/purchase/orders/{id}/reject': {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        get?: never
+        put?: never
         /** 驳回采购订单 */
-        post: operations["rejectPurchaseOrder"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
+        post: operations['rejectPurchaseOrder']
+        delete?: never
+        options?: never
+        head?: never
+        patch?: never
+        trace?: never
+    }
 }
-export type webhooks = Record<string, never>;
+export type webhooks = Record<string, never>
 export interface components {
     schemas: {
         ApiResponse: {
@@ -392,1285 +392,1285 @@ export interface components {
              * @description 响应码（200=成功，>200=业务错误，>=500=系统错误）
              * @example 200
              */
-            code: number;
+            code: number
             /**
              * @description 响应消息
              * @example 操作成功
              */
-            message: string;
+            message: string
             /** @description 响应数据 */
-            data?: unknown;
+            data?: unknown
             /**
              * Format: int64
              * @description 时间戳（毫秒）
              * @example 1729857600000
              */
-            timestamp: number;
-        };
+            timestamp: number
+        }
         PageResponse: {
             /** @example 200 */
-            code: number;
+            code: number
             /** @example 操作成功 */
-            message: string;
+            message: string
             data: {
                 /** @description 数据列表 */
-                records?: unknown[];
+                records?: unknown[]
                 /**
                  * Format: int64
                  * @description 总记录数
                  * @example 100
                  */
-                total?: number;
+                total?: number
                 /**
                  * @description 每页大小
                  * @example 20
                  */
-                size?: number;
+                size?: number
                 /**
                  * @description 当前页码
                  * @example 1
                  */
-                current?: number;
+                current?: number
                 /**
                  * @description 总页数
                  * @example 5
                  */
-                pages?: number;
-            };
+                pages?: number
+            }
             /**
              * Format: int64
              * @example 1729857600000
              */
-            timestamp: number;
-        };
+            timestamp: number
+        }
         ErrorResponse: {
             /**
              * @description 错误码
              * @example 400
              */
-            code: number;
+            code: number
             /**
              * @description 错误消息
              * @example 参数验证失败
              */
-            message: string;
+            message: string
             /** @description 错误详情 */
-            data?: Record<string, never> | null;
+            data?: Record<string, never> | null
             /**
              * Format: int64
              * @example 1729857600000
              */
-            timestamp: number;
-        };
+            timestamp: number
+        }
         LoginRequest: {
             /**
              * @description 租户代码
              * @example default
              */
-            tenantCode: string;
+            tenantCode: string
             /**
              * @description 用户名
              * @example admin
              */
-            username: string;
+            username: string
             /**
              * Format: password
              * @description 密码
              * @example 123456
              */
-            password: string;
-        };
+            password: string
+        }
         LoginResponse: {
             /**
              * @description 访问令牌（JWT）
              * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
              */
-            token?: string;
+            token?: string
             /**
              * @description 刷新令牌
              * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
              */
-            refreshToken?: string;
+            refreshToken?: string
             /**
              * @description 过期时间（秒）
              * @example 7200
              */
-            expiresIn?: number;
-            userInfo?: components["schemas"]["UserInfo"];
-        };
+            expiresIn?: number
+            userInfo?: components['schemas']['UserInfo']
+        }
         UserInfo: {
             /**
              * Format: int64
              * @example 1
              */
-            id?: number;
+            id?: number
             /** @example admin */
-            username?: string;
+            username?: string
             /** @example 管理员 */
-            realName?: string;
+            realName?: string
             /**
              * Format: email
              * @example admin@example.com
              */
-            email?: string;
+            email?: string
             /** @example 13800138000 */
-            phone?: string;
+            phone?: string
             /**
              * Format: uri
              * @example https://example.com/avatar.jpg
              */
-            avatar?: string;
+            avatar?: string
             /**
              * Format: int64
              * @example 1
              */
-            tenantId?: number;
+            tenantId?: number
             /** @example 默认租户 */
-            tenantName?: string;
+            tenantName?: string
             /**
              * @example [
              *       "admin",
              *       "manager"
              *     ]
              */
-            roles?: string[];
+            roles?: string[]
             /**
              * @example [
              *       "*:*:*"
              *     ]
              */
-            permissions?: string[];
-        };
+            permissions?: string[]
+        }
         TenantVO: {
             /** Format: int64 */
-            id?: number;
+            id?: number
             /** @description 租户代码 */
-            tenantCode?: string;
+            tenantCode?: string
             /** @description 租户名称 */
-            tenantName?: string;
+            tenantName?: string
             /**
              * @description 租户类型
              * @enum {string}
              */
-            tenantType?: "ENTERPRISE" | "PERSONAL";
+            tenantType?: 'ENTERPRISE' | 'PERSONAL'
             /**
              * @description 状态
              * @enum {string}
              */
-            status?: "ACTIVE" | "SUSPENDED" | "EXPIRED";
+            status?: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED'
             /** @description 联系人 */
-            contactName?: string;
+            contactName?: string
             /** @description 联系电话 */
-            contactPhone?: string;
+            contactPhone?: string
             /**
              * Format: email
              * @description 联系邮箱
              */
-            contactEmail?: string;
+            contactEmail?: string
             /**
              * Format: date-time
              * @description 过期时间
              */
-            expiredAt?: string;
+            expiredAt?: string
             /** @description 最大用户数 */
-            maxUsers?: number;
+            maxUsers?: number
             /**
              * Format: int64
              * @description 最大存储空间（字节）
              */
-            maxStorage?: number;
+            maxStorage?: number
             /** Format: date-time */
-            createdAt?: string;
+            createdAt?: string
             /** Format: date-time */
-            updatedAt?: string;
-        };
+            updatedAt?: string
+        }
         TenantCreateRequest: {
-            tenantCode: string;
-            tenantName: string;
+            tenantCode: string
+            tenantName: string
             /**
              * @default ENTERPRISE
              * @enum {string}
              */
-            tenantType: "ENTERPRISE" | "PERSONAL";
-            contactName: string;
-            contactPhone: string;
+            tenantType: 'ENTERPRISE' | 'PERSONAL'
+            contactName: string
+            contactPhone: string
             /** Format: email */
-            contactEmail?: string;
+            contactEmail?: string
             /** @default 10 */
-            maxUsers: number;
+            maxUsers: number
             /**
              * Format: int64
              * @default 10737418240
              */
-            maxStorage: number;
-            remark?: string;
-        };
+            maxStorage: number
+            remark?: string
+        }
         UserVO: {
             /** Format: int64 */
-            id?: number;
-            username?: string;
-            realName?: string;
-            email?: string;
-            phone?: string;
+            id?: number
+            username?: string
+            realName?: string
+            email?: string
+            phone?: string
             /** @enum {string} */
-            gender?: "MALE" | "FEMALE" | "UNKNOWN";
-            avatar?: string;
+            gender?: 'MALE' | 'FEMALE' | 'UNKNOWN'
+            avatar?: string
             /** Format: int64 */
-            orgId?: number;
-            orgName?: string;
+            orgId?: number
+            orgName?: string
             /** @enum {string} */
-            status?: "ACTIVE" | "LOCKED" | "DISABLED";
+            status?: 'ACTIVE' | 'LOCKED' | 'DISABLED'
             /** Format: date-time */
-            lastLoginAt?: string;
-            lastLoginIp?: string;
-            roles?: components["schemas"]["RoleVO"][];
+            lastLoginAt?: string
+            lastLoginIp?: string
+            roles?: components['schemas']['RoleVO'][]
             /** Format: date-time */
-            createdAt?: string;
+            createdAt?: string
             /** Format: date-time */
-            updatedAt?: string;
-        };
+            updatedAt?: string
+        }
         UserCreateRequest: {
-            username: string;
+            username: string
             /** Format: password */
-            password: string;
-            realName: string;
+            password: string
+            realName: string
             /** Format: email */
-            email?: string;
-            phone?: string;
+            email?: string
+            phone?: string
             /**
              * @default UNKNOWN
              * @enum {string}
              */
-            gender: "MALE" | "FEMALE" | "UNKNOWN";
+            gender: 'MALE' | 'FEMALE' | 'UNKNOWN'
             /** Format: int64 */
-            orgId?: number;
-            roleIds?: number[];
-            remark?: string;
-        };
+            orgId?: number
+            roleIds?: number[]
+            remark?: string
+        }
         UserUpdateRequest: {
-            realName?: string;
+            realName?: string
             /** Format: email */
-            email?: string;
-            phone?: string;
+            email?: string
+            phone?: string
             /** @enum {string} */
-            gender?: "MALE" | "FEMALE" | "UNKNOWN";
+            gender?: 'MALE' | 'FEMALE' | 'UNKNOWN'
             /** Format: int64 */
-            orgId?: number;
+            orgId?: number
             /** @enum {string} */
-            status?: "ACTIVE" | "LOCKED" | "DISABLED";
-            roleIds?: number[];
-            remark?: string;
-        };
+            status?: 'ACTIVE' | 'LOCKED' | 'DISABLED'
+            roleIds?: number[]
+            remark?: string
+        }
         RoleVO: {
             /** Format: int64 */
-            id?: number;
-            roleCode?: string;
-            roleName?: string;
+            id?: number
+            roleCode?: string
+            roleName?: string
             /** @enum {string} */
-            roleType?: "SYSTEM" | "CUSTOM";
+            roleType?: 'SYSTEM' | 'CUSTOM'
             /** @enum {string} */
-            dataScope?: "ALL" | "ORG" | "ORG_CHILD" | "SELF" | "CUSTOM";
-            sortOrder?: number;
-            remark?: string;
+            dataScope?: 'ALL' | 'ORG' | 'ORG_CHILD' | 'SELF' | 'CUSTOM'
+            sortOrder?: number
+            remark?: string
             /** Format: date-time */
-            createdAt?: string;
-        };
+            createdAt?: string
+        }
         DictTypeVO: {
             /** Format: int64 */
-            id?: number;
-            dictCode?: string;
-            dictName?: string;
+            id?: number
+            dictCode?: string
+            dictName?: string
             /** @enum {string} */
-            dictType?: "SYSTEM" | "CUSTOM";
-            description?: string;
+            dictType?: 'SYSTEM' | 'CUSTOM'
+            description?: string
             /** @enum {string} */
-            status?: "ACTIVE" | "INACTIVE";
+            status?: 'ACTIVE' | 'INACTIVE'
             /** Format: date-time */
-            createdAt?: string;
-        };
+            createdAt?: string
+        }
         DictDataVO: {
             /** Format: int64 */
-            id?: number;
+            id?: number
             /** Format: int64 */
-            dictTypeId?: number;
+            dictTypeId?: number
             /** @description 字典标签（显示值） */
-            dictLabel?: string;
+            dictLabel?: string
             /** @description 字典键值（实际值） */
-            dictValue?: string;
+            dictValue?: string
             /** @description 排序 */
-            dictSort?: number;
+            dictSort?: number
             /**
              * @description 标签样式
              * @enum {string}
              */
-            tagType?: "default" | "primary" | "success" | "info" | "warning" | "danger";
+            tagType?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger'
             /** @description 是否默认 */
-            isDefault?: boolean;
+            isDefault?: boolean
             /** @enum {string} */
-            status?: "ACTIVE" | "INACTIVE";
-        };
+            status?: 'ACTIVE' | 'INACTIVE'
+        }
         ProductVO: {
             /** Format: int64 */
-            id?: number;
-            productCode?: string;
-            productName?: string;
+            id?: number
+            productCode?: string
+            productName?: string
             /** Format: int64 */
-            categoryId?: number;
-            categoryName?: string;
-            unit?: string;
-            spec?: string;
-            brand?: string;
-            barcode?: string;
-            imageUrl?: string;
+            categoryId?: number
+            categoryName?: string
+            unit?: string
+            spec?: string
+            brand?: string
+            barcode?: string
+            imageUrl?: string
             /** Format: decimal */
-            purchasePrice?: number;
+            purchasePrice?: number
             /** Format: decimal */
-            salePrice?: number;
+            salePrice?: number
             /** Format: decimal */
-            costPrice?: number;
+            costPrice?: number
             /** Format: decimal */
-            minStock?: number;
+            minStock?: number
             /** Format: decimal */
-            maxStock?: number;
+            maxStock?: number
             /** @enum {string} */
-            status?: "ACTIVE" | "INACTIVE";
+            status?: 'ACTIVE' | 'INACTIVE'
             /** Format: date-time */
-            createdAt?: string;
-        };
+            createdAt?: string
+        }
         ProductCreateRequest: {
-            productCode: string;
-            productName: string;
+            productCode: string
+            productName: string
             /** Format: int64 */
-            categoryId?: number;
-            unit: string;
-            spec?: string;
-            brand?: string;
-            barcode?: string;
+            categoryId?: number
+            unit: string
+            spec?: string
+            brand?: string
+            barcode?: string
             /** Format: decimal */
-            purchasePrice?: number;
+            purchasePrice?: number
             /** Format: decimal */
-            salePrice?: number;
+            salePrice?: number
             /** Format: decimal */
-            minStock?: number;
-            remark?: string;
-        };
+            minStock?: number
+            remark?: string
+        }
         StockVO: {
             /** Format: int64 */
-            id?: number;
+            id?: number
             /** Format: int64 */
-            warehouseId?: number;
-            warehouseName?: string;
+            warehouseId?: number
+            warehouseName?: string
             /** Format: int64 */
-            productId?: number;
-            productCode?: string;
-            productName?: string;
+            productId?: number
+            productCode?: string
+            productName?: string
             /**
              * Format: decimal
              * @description 当前库存
              */
-            quantity?: number;
+            quantity?: number
             /**
              * Format: decimal
              * @description 锁定库存
              */
-            lockedQuantity?: number;
+            lockedQuantity?: number
             /**
              * Format: decimal
              * @description 可用库存
              */
-            availableQuantity?: number;
+            availableQuantity?: number
             /** Format: decimal */
-            costPrice?: number;
+            costPrice?: number
             /** Format: date-time */
-            lastInAt?: string;
+            lastInAt?: string
             /** Format: date-time */
-            lastOutAt?: string;
-        };
+            lastOutAt?: string
+        }
         StockLogVO: {
             /** Format: int64 */
-            id?: number;
-            warehouseName?: string;
-            productCode?: string;
-            productName?: string;
+            id?: number
+            warehouseName?: string
+            productCode?: string
+            productName?: string
             /** @enum {string} */
-            logType?: "IN" | "OUT" | "TRANSFER" | "ADJUST";
+            logType?: 'IN' | 'OUT' | 'TRANSFER' | 'ADJUST'
             /** Format: decimal */
-            quantity?: number;
+            quantity?: number
             /** Format: decimal */
-            beforeQuantity?: number;
+            beforeQuantity?: number
             /** Format: decimal */
-            afterQuantity?: number;
-            billType?: string;
-            billNo?: string;
-            operatorName?: string;
+            afterQuantity?: number
+            billType?: string
+            billNo?: string
+            operatorName?: string
             /** Format: date-time */
-            operatedAt?: string;
-            remark?: string;
-        };
+            operatedAt?: string
+            remark?: string
+        }
         PurchaseOrderVO: {
             /** Format: int64 */
-            id?: number;
-            orderNo?: string;
+            id?: number
+            orderNo?: string
             /** Format: int64 */
-            supplierId?: number;
-            supplierName?: string;
+            supplierId?: number
+            supplierName?: string
             /** Format: int64 */
-            warehouseId?: number;
-            warehouseName?: string;
+            warehouseId?: number
+            warehouseName?: string
             /** Format: date */
-            orderDate?: string;
+            orderDate?: string
             /** Format: date */
-            expectedDate?: string;
+            expectedDate?: string
             /** Format: decimal */
-            totalAmount?: number;
+            totalAmount?: number
             /** Format: decimal */
-            discountAmount?: number;
+            discountAmount?: number
             /** Format: decimal */
-            actualAmount?: number;
+            actualAmount?: number
             /** Format: decimal */
-            paidAmount?: number;
+            paidAmount?: number
             /** @enum {string} */
-            status?: "DRAFT" | "PENDING" | "APPROVED" | "IN_TRANSIT" | "COMPLETED" | "CANCELLED";
-            items?: components["schemas"]["PurchaseOrderItemVO"][];
-            createdBy?: string;
+            status?: 'DRAFT' | 'PENDING' | 'APPROVED' | 'IN_TRANSIT' | 'COMPLETED' | 'CANCELLED'
+            items?: components['schemas']['PurchaseOrderItemVO'][]
+            createdBy?: string
             /** Format: date-time */
-            createdAt?: string;
-        };
+            createdAt?: string
+        }
         PurchaseOrderItemVO: {
             /** Format: int64 */
-            id?: number;
+            id?: number
             /** Format: int64 */
-            productId?: number;
-            productCode?: string;
-            productName?: string;
+            productId?: number
+            productCode?: string
+            productName?: string
             /** Format: decimal */
-            quantity?: number;
+            quantity?: number
             /** Format: decimal */
-            receivedQuantity?: number;
+            receivedQuantity?: number
             /** Format: decimal */
-            price?: number;
+            price?: number
             /** Format: decimal */
-            amount?: number;
+            amount?: number
             /** Format: decimal */
-            taxRate?: number;
+            taxRate?: number
             /** Format: decimal */
-            taxAmount?: number;
-        };
+            taxAmount?: number
+        }
         PurchaseOrderCreateRequest: {
             /** Format: int64 */
-            supplierId: number;
+            supplierId: number
             /** Format: int64 */
-            warehouseId: number;
+            warehouseId: number
             /** Format: date */
-            orderDate: string;
+            orderDate: string
             /** Format: date */
-            expectedDate?: string;
+            expectedDate?: string
             /**
              * Format: decimal
              * @default 0
              */
-            discountAmount: number;
+            discountAmount: number
             items: {
                 /** Format: int64 */
-                productId: number;
+                productId: number
                 /** Format: decimal */
-                quantity: number;
+                quantity: number
                 /** Format: decimal */
-                price: number;
+                price: number
                 /**
                  * Format: decimal
                  * @default 0
                  */
-                taxRate: number;
-                remark?: string;
-            }[];
-            remark?: string;
-        };
-    };
-    responses: never;
+                taxRate: number
+                remark?: string
+            }[]
+            remark?: string
+        }
+    }
+    responses: never
     parameters: {
         /** @description 资源ID */
-        IdParam: number;
+        IdParam: number
         /** @description 页码（从1开始） */
-        PageParam: number;
+        PageParam: number
         /** @description 每页大小 */
-        SizeParam: number;
-    };
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+        SizeParam: number
+    }
+    requestBodies: never
+    headers: never
+    pathItems: never
 }
-export type $defs = Record<string, never>;
+export type $defs = Record<string, never>
 export interface operations {
     login: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LoginRequest"];
-            };
-        };
+                'application/json': components['schemas']['LoginRequest']
+            }
+        }
         responses: {
             /** @description 登录成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["LoginResponse"];
-                    };
-                };
-            };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['LoginResponse']
+                    }
+                }
+            }
             /** @description 认证失败 */
             401: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ErrorResponse']
+                }
+            }
+        }
+    }
     logout: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 登出成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     refreshToken: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": {
-                    refreshToken: string;
-                };
-            };
-        };
+                'application/json': {
+                    refreshToken: string
+                }
+            }
+        }
         responses: {
             /** @description 刷新成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
+                    'application/json': components['schemas']['ApiResponse'] & {
                         data?: {
-                            token?: string;
-                            expiresIn?: number;
-                        };
-                    };
-                };
-            };
-        };
-    };
+                            token?: string
+                            expiresIn?: number
+                        }
+                    }
+                }
+            }
+        }
+    }
     getUserInfo: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["UserInfo"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['UserInfo']
+                    }
+                }
+            }
+        }
+    }
     listTenants: {
         parameters: {
             query?: {
                 /** @description 页码 */
-                page?: number;
+                page?: number
                 /** @description 每页大小 */
-                size?: number;
+                size?: number
                 /** @description 租户名称（模糊查询） */
-                tenantName?: string;
+                tenantName?: string
                 /** @description 状态筛选 */
-                status?: "ACTIVE" | "SUSPENDED" | "EXPIRED";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                status?: 'ACTIVE' | 'SUSPENDED' | 'EXPIRED'
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     createTenant: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TenantCreateRequest"];
-            };
-        };
+                'application/json': components['schemas']['TenantCreateRequest']
+            }
+        }
         responses: {
             /** @description 创建成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["TenantVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['TenantVO']
+                    }
+                }
+            }
+        }
+    }
     getTenant: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["TenantVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['TenantVO']
+                    }
+                }
+            }
+        }
+    }
     updateTenant: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
+                id: number
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TenantCreateRequest"];
-            };
-        };
+                'application/json': components['schemas']['TenantCreateRequest']
+            }
+        }
         responses: {
             /** @description 更新成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     deleteTenant: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: number
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 删除成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     listUsers: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                username?: string;
-                realName?: string;
-                orgId?: number;
-                status?: "ACTIVE" | "LOCKED" | "DISABLED";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                username?: string
+                realName?: string
+                orgId?: number
+                status?: 'ACTIVE' | 'LOCKED' | 'DISABLED'
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     createUser: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UserCreateRequest"];
-            };
-        };
+                'application/json': components['schemas']['UserCreateRequest']
+            }
+        }
         responses: {
             /** @description 创建成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["UserVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['UserVO']
+                    }
+                }
+            }
+        }
+    }
     getUser: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["UserVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['UserVO']
+                    }
+                }
+            }
+        }
+    }
     updateUser: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["UserUpdateRequest"];
-            };
-        };
+                'application/json': components['schemas']['UserUpdateRequest']
+            }
+        }
         responses: {
             /** @description 更新成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     deleteUser: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 删除成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     resetPassword: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": {
+                'application/json': {
                     /** Format: password */
-                    newPassword: string;
-                };
-            };
-        };
+                    newPassword: string
+                }
+            }
+        }
         responses: {
             /** @description 重置成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     listDictTypes: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                dictName?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                dictName?: string
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     getDictData: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 字典编码（如 user_status） */
-                dictCode: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                dictCode: string
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["DictDataVO"][];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['DictDataVO'][]
+                    }
+                }
+            }
+        }
+    }
     getDictLabel: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
-                dictCode: string;
-                dictValue: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                dictCode: string
+                dictValue: string
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
+                    'application/json': components['schemas']['ApiResponse'] & {
                         data?: {
-                            label?: string;
-                            tagType?: string;
-                        };
-                    };
-                };
-            };
-        };
-    };
+                            label?: string
+                            tagType?: string
+                        }
+                    }
+                }
+            }
+        }
+    }
     listProducts: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                productName?: string;
-                categoryId?: number;
-                status?: "ACTIVE" | "INACTIVE";
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                productName?: string
+                categoryId?: number
+                status?: 'ACTIVE' | 'INACTIVE'
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     createProduct: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProductCreateRequest"];
-            };
-        };
+                'application/json': components['schemas']['ProductCreateRequest']
+            }
+        }
         responses: {
             /** @description 创建成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["ProductVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['ProductVO']
+                    }
+                }
+            }
+        }
+    }
     listStocks: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                warehouseId?: number;
-                productName?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                warehouseId?: number
+                productName?: string
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     listStockLogs: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                warehouseId?: number;
-                productId?: number;
-                logType?: "IN" | "OUT" | "TRANSFER" | "ADJUST";
-                startDate?: string;
-                endDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                warehouseId?: number
+                productId?: number
+                logType?: 'IN' | 'OUT' | 'TRANSFER' | 'ADJUST'
+                startDate?: string
+                endDate?: string
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     listPurchaseOrders: {
         parameters: {
             query?: {
                 /** @description 页码（从1开始） */
-                page?: components["parameters"]["PageParam"];
+                page?: components['parameters']['PageParam']
                 /** @description 每页大小 */
-                size?: components["parameters"]["SizeParam"];
-                orderNo?: string;
-                supplierId?: number;
-                status?: "DRAFT" | "PENDING" | "APPROVED" | "IN_TRANSIT" | "COMPLETED" | "CANCELLED";
-                startDate?: string;
-                endDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
+                size?: components['parameters']['SizeParam']
+                orderNo?: string
+                supplierId?: number
+                status?: 'DRAFT' | 'PENDING' | 'APPROVED' | 'IN_TRANSIT' | 'COMPLETED' | 'CANCELLED'
+                startDate?: string
+                endDate?: string
+            }
+            header?: never
+            path?: never
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['PageResponse']
+                }
+            }
+        }
+    }
     createPurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
+            query?: never
+            header?: never
+            path?: never
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": components["schemas"]["PurchaseOrderCreateRequest"];
-            };
-        };
+                'application/json': components['schemas']['PurchaseOrderCreateRequest']
+            }
+        }
         responses: {
             /** @description 创建成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["PurchaseOrderVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['PurchaseOrderVO']
+                    }
+                }
+            }
+        }
+    }
     getPurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"] & {
-                        data?: components["schemas"]["PurchaseOrderVO"];
-                    };
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse'] & {
+                        data?: components['schemas']['PurchaseOrderVO']
+                    }
+                }
+            }
+        }
+    }
     deletePurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 删除成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     submitPurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
+        requestBody?: never
         responses: {
             /** @description 提交成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     approvePurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
         requestBody?: {
             content: {
-                "application/json": {
-                    remark?: string;
-                };
-            };
-        };
+                'application/json': {
+                    remark?: string
+                }
+            }
+        }
         responses: {
             /** @description 审核通过 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
     rejectPurchaseOrder: {
         parameters: {
-            query?: never;
-            header?: never;
+            query?: never
+            header?: never
             path: {
                 /** @description 资源ID */
-                id: components["parameters"]["IdParam"];
-            };
-            cookie?: never;
-        };
+                id: components['parameters']['IdParam']
+            }
+            cookie?: never
+        }
         requestBody: {
             content: {
-                "application/json": {
+                'application/json': {
                     /** @description 驳回原因 */
-                    reason: string;
-                };
-            };
-        };
+                    reason: string
+                }
+            }
+        }
         responses: {
             /** @description 驳回成功 */
             200: {
                 headers: {
-                    [name: string]: unknown;
-                };
+                    [name: string]: unknown
+                }
                 content: {
-                    "application/json": components["schemas"]["ApiResponse"];
-                };
-            };
-        };
-    };
+                    'application/json': components['schemas']['ApiResponse']
+                }
+            }
+        }
+    }
 }

@@ -6,10 +6,13 @@ import request from './request'
 
 // 类型定义
 type TenantListParams = paths['/tenants']['get']['parameters']['query']
-type TenantListResponse = paths['/tenants']['get']['responses']['200']['content']['application/json']
+type TenantListResponse =
+    paths['/tenants']['get']['responses']['200']['content']['application/json']
 type TenantCreateRequest = paths['/tenants']['post']['requestBody']['content']['application/json']
-type TenantDetailResponse = paths['/tenants/{id}']['get']['responses']['200']['content']['application/json']
-type TenantUpdateRequest = paths['/tenants/{id}']['put']['requestBody']['content']['application/json']
+type TenantDetailResponse =
+    paths['/tenants/{id}']['get']['responses']['200']['content']['application/json']
+type TenantUpdateRequest =
+    paths['/tenants/{id}']['put']['requestBody']['content']['application/json']
 
 /**
  * 获取租户列表（分页）

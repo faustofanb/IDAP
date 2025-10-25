@@ -41,18 +41,10 @@ const formData = ref<ProductCreateRequest>({
 
 // 表单验证规则
 const rules = {
-    categoryId: [
-        { required: true, message: '请选择产品分类', trigger: 'change' }
-    ],
-    name: [
-        { required: true, message: '请输入产品名称', trigger: 'blur' }
-    ],
-    sku: [
-        { required: true, message: '请输入SKU编码', trigger: 'blur' }
-    ],
-    unit: [
-        { required: true, message: '请输入单位', trigger: 'blur' }
-    ]
+    categoryId: [{ required: true, message: '请选择产品分类', trigger: 'change' }],
+    name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+    sku: [{ required: true, message: '请输入SKU编码', trigger: 'blur' }],
+    unit: [{ required: true, message: '请输入单位', trigger: 'blur' }]
 }
 
 // 加载列表数据
@@ -197,10 +189,20 @@ onMounted(() => {
         <el-card class="search-card">
             <el-form :model="searchForm" inline>
                 <el-form-item label="产品名称">
-                    <el-input v-model="searchForm.name" placeholder="请输入产品名称" clearable @keyup.enter="handleSearch" />
+                    <el-input
+                        v-model="searchForm.name"
+                        placeholder="请输入产品名称"
+                        clearable
+                        @keyup.enter="handleSearch"
+                    />
                 </el-form-item>
                 <el-form-item label="SKU编码">
-                    <el-input v-model="searchForm.sku" placeholder="请输入SKU编码" clearable @keyup.enter="handleSearch" />
+                    <el-input
+                        v-model="searchForm.sku"
+                        placeholder="请输入SKU编码"
+                        clearable
+                        @keyup.enter="handleSearch"
+                    />
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
@@ -256,20 +258,35 @@ onMounted(() => {
 
             <!-- 分页 -->
             <div class="pagination">
-                <el-pagination v-model:current-page="searchForm.page" v-model:page-size="searchForm.size"
-                    :page-sizes="[10, 20, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper"
-                    @size-change="handleSizeChange" @current-change="handlePageChange" />
+                <el-pagination
+                    v-model:current-page="searchForm.page"
+                    v-model:page-size="searchForm.size"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :total="total"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    @size-change="handleSizeChange"
+                    @current-change="handlePageChange"
+                />
             </div>
         </el-card>
 
         <!-- 新增/编辑对话框 -->
-        <el-dialog v-model="dialogVisible" :title="dialogTitle" width="700px" :close-on-click-modal="false">
+        <el-dialog
+            v-model="dialogVisible"
+            :title="dialogTitle"
+            width="700px"
+            :close-on-click-modal="false"
+        >
             <el-form ref="formRef" :model="formData" :rules="rules" label-width="110px">
                 <el-row :gutter="20">
                     <el-col :span="12">
                         <el-form-item label="产品分类" prop="categoryId">
-                            <el-input-number v-model="formData.categoryId" :min="1" placeholder="请输入分类ID"
-                                style="width: 100%" />
+                            <el-input-number
+                                v-model="formData.categoryId"
+                                :min="1"
+                                placeholder="请输入分类ID"
+                                style="width: 100%"
+                            />
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
@@ -313,7 +330,11 @@ onMounted(() => {
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="状态" prop="status">
-                            <el-select v-model="formData.status" placeholder="请选择状态" style="width: 100%">
+                            <el-select
+                                v-model="formData.status"
+                                placeholder="请选择状态"
+                                style="width: 100%"
+                            >
                                 <el-option label="在售" value="ON_SALE" />
                                 <el-option label="下架" value="OFF_SALE" />
                                 <el-option label="缺货" value="OUT_OF_STOCK" />
@@ -325,14 +346,24 @@ onMounted(() => {
                 <el-row :gutter="20">
                     <el-col :span="12">
                         <el-form-item label="采购价" prop="purchasePrice">
-                            <el-input-number v-model="formData.purchasePrice" :min="0" :precision="2"
-                                placeholder="请输入采购价" style="width: 100%" />
+                            <el-input-number
+                                v-model="formData.purchasePrice"
+                                :min="0"
+                                :precision="2"
+                                placeholder="请输入采购价"
+                                style="width: 100%"
+                            />
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="销售价" prop="salePrice">
-                            <el-input-number v-model="formData.salePrice" :min="0" :precision="2" placeholder="请输入销售价"
-                                style="width: 100%" />
+                            <el-input-number
+                                v-model="formData.salePrice"
+                                :min="0"
+                                :precision="2"
+                                placeholder="请输入销售价"
+                                style="width: 100%"
+                            />
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -340,20 +371,33 @@ onMounted(() => {
                 <el-row :gutter="20">
                     <el-col :span="12">
                         <el-form-item label="库存下限" prop="stockLowerLimit">
-                            <el-input-number v-model="formData.stockLowerLimit" :min="0" placeholder="请输入库存下限"
-                                style="width: 100%" />
+                            <el-input-number
+                                v-model="formData.stockLowerLimit"
+                                :min="0"
+                                placeholder="请输入库存下限"
+                                style="width: 100%"
+                            />
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="库存上限" prop="stockUpperLimit">
-                            <el-input-number v-model="formData.stockUpperLimit" :min="0" placeholder="请输入库存上限"
-                                style="width: 100%" />
+                            <el-input-number
+                                v-model="formData.stockUpperLimit"
+                                :min="0"
+                                placeholder="请输入库存上限"
+                                style="width: 100%"
+                            />
                         </el-form-item>
                     </el-col>
                 </el-row>
 
                 <el-form-item label="备注" prop="remark">
-                    <el-input v-model="formData.remark" type="textarea" :rows="3" placeholder="请输入备注信息" />
+                    <el-input
+                        v-model="formData.remark"
+                        type="textarea"
+                        :rows="3"
+                        placeholder="请输入备注信息"
+                    />
                 </el-form-item>
             </el-form>
             <template #footer>
