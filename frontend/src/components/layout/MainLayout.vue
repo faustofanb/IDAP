@@ -31,9 +31,10 @@ const menuItems = [
         title: '进销存管理',
         icon: 'Box',
         children: [
+            { path: '/inventory/product', title: '产品管理' },
+            { path: '/inventory/stock', title: '库存管理' },
             { path: '/inventory/purchase', title: '采购管理' },
-            { path: '/inventory/sales', title: '销售管理' },
-            { path: '/inventory/stock', title: '库存管理' }
+            { path: '/inventory/sales', title: '销售管理' }
         ]
     }
 ]
@@ -86,11 +87,7 @@ const menuItems = [
                                 </el-icon>
                                 <span>{{ item.title }}</span>
                             </template>
-                            <el-menu-item
-                                v-for="child in item.children"
-                                :key="child.path"
-                                :index="child.path"
-                            >
+                            <el-menu-item v-for="child in item.children" :key="child.path" :index="child.path">
                                 {{ child.title }}
                             </el-menu-item>
                         </el-sub-menu>
@@ -182,6 +179,7 @@ const menuItems = [
 
 .main-container {
     height: calc(100vh - 60px);
+    overflow: hidden;
 }
 
 .sidebar {
@@ -189,11 +187,13 @@ const menuItems = [
     border-right: 1px solid #e6e6e6;
     transition: width 0.3s;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .content {
     background-color: #f5f5f5;
-    padding: 20px;
-    overflow-y: auto;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
 }
 </style>

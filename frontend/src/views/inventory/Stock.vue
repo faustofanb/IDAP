@@ -43,7 +43,8 @@ const loadData = async () => {
     loading.value = true
     try {
         const res = await getStockList(searchForm.value)
-        const data = res.data as any
+        // 响应拦截器已经返回了 data
+        const data = res as any
         tableData.value = data?.records || []
         total.value = data?.total || 0
     } catch (error) {
@@ -59,7 +60,8 @@ const loadLogData = async () => {
     logLoading.value = true
     try {
         const res = await getStockLogs(logSearchForm.value)
-        const data = res.data as any
+        // 响应拦截器已经返回了 data
+        const data = res as any
         logTableData.value = data?.records || []
         logTotal.value = data?.total || 0
     } catch (error) {
@@ -175,25 +177,15 @@ onMounted(() => {
                 <el-card class="search-card">
                     <el-form :model="searchForm" inline>
                         <el-form-item label="产品名称">
-                            <el-input
-                                v-model="searchForm.productName"
-                                placeholder="请输入产品名称"
-                                clearable
-                                @keyup.enter="handleSearch"
-                            />
+                            <el-input v-model="searchForm.productName" placeholder="请输入产品名称" clearable
+                                @keyup.enter="handleSearch" />
                         </el-form-item>
                         <el-form-item label="仓库ID">
-                            <el-input-number
-                                v-model="searchForm.warehouseId"
-                                :min="1"
-                                placeholder="请输入仓库ID"
-                                clearable
-                            />
+                            <el-input-number v-model="searchForm.warehouseId" :min="1" placeholder="请输入仓库ID"
+                                clearable />
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" :icon="Search" @click="handleSearch"
-                                >搜索</el-button
-                            >
+                            <el-button type="primary" :icon="Search" @click="handleSearch">搜索</el-button>
                             <el-button :icon="Refresh" @click="handleReset">重置</el-button>
                         </el-form-item>
                     </el-form>
@@ -202,28 +194,13 @@ onMounted(() => {
                 <!-- 数据表格 -->
                 <el-card class="table-card">
                     <el-table :data="tableData" v-loading="loading" border stripe>
-                        <el-table-column prop="id" label="ID" width="80" />
+                        <el-table-column prop="id" label="ID" width="80" fixed />
                         <el-table-column prop="warehouseName" label="仓库" width="120" />
                         <el-table-column prop="productName" label="产品名称" min-width="200" />
                         <el-table-column prop="productSku" label="SKU" width="150" />
-                        <el-table-column
-                            prop="totalQuantity"
-                            label="总库存"
-                            width="100"
-                            align="right"
-                        />
-                        <el-table-column
-                            prop="availableQuantity"
-                            label="可用库存"
-                            width="100"
-                            align="right"
-                        />
-                        <el-table-column
-                            prop="lockedQuantity"
-                            label="锁定库存"
-                            width="100"
-                            align="right"
-                        />
+                        <el-table-column prop="totalQuantity" label="总库存" width="100" align="right" />
+                        <el-table-column prop="availableQuantity" label="可用库存" width="100" align="right" />
+                        <el-table-column prop="lockedQuantity" label="锁定库存" width="100" align="right" />
                         <el-table-column label="库存状态" width="120">
                             <template #default="{ row }">
                                 <el-tag :type="getStockStatus(row).type">
@@ -236,15 +213,10 @@ onMounted(() => {
 
                     <!-- 分页 -->
                     <div class="pagination">
-                        <el-pagination
-                            v-model:current-page="searchForm.page"
-                            v-model:page-size="searchForm.size"
-                            :page-sizes="[10, 20, 50, 100]"
-                            :total="total"
-                            layout="total, sizes, prev, pager, next, jumper"
-                            @size-change="handleSizeChange"
-                            @current-change="handlePageChange"
-                        />
+                        <el-pagination v-model:current-page="searchForm.page" v-model:page-size="searchForm.size"
+                            :page-sizes="[10, 20, 50, 100]" :total="total"
+                            layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
+                            @current-change="handlePageChange" />
                     </div>
                 </el-card>
             </el-tab-pane>
@@ -255,27 +227,15 @@ onMounted(() => {
                 <el-card class="search-card">
                     <el-form :model="logSearchForm" inline>
                         <el-form-item label="产品ID">
-                            <el-input-number
-                                v-model="logSearchForm.productId"
-                                :min="1"
-                                placeholder="请输入产品ID"
-                                clearable
-                            />
+                            <el-input-number v-model="logSearchForm.productId" :min="1" placeholder="请输入产品ID"
+                                clearable />
                         </el-form-item>
                         <el-form-item label="仓库ID">
-                            <el-input-number
-                                v-model="logSearchForm.warehouseId"
-                                :min="1"
-                                placeholder="请输入仓库ID"
-                                clearable
-                            />
+                            <el-input-number v-model="logSearchForm.warehouseId" :min="1" placeholder="请输入仓库ID"
+                                clearable />
                         </el-form-item>
                         <el-form-item label="变动类型">
-                            <el-select
-                                v-model="logSearchForm.changeType"
-                                placeholder="请选择类型"
-                                clearable
-                            >
+                            <el-select v-model="logSearchForm.changeType" placeholder="请选择类型" clearable>
                                 <el-option label="入库" value="IN" />
                                 <el-option label="出库" value="OUT" />
                                 <el-option label="调拨" value="TRANSFER" />
@@ -283,18 +243,16 @@ onMounted(() => {
                             </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" :icon="Search" @click="handleLogSearch"
-                                >搜索</el-button
-                            >
+                            <el-button type="primary" :icon="Search" @click="handleLogSearch">搜索</el-button>
                             <el-button :icon="Refresh" @click="handleLogReset">重置</el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>
 
-                <!-- 数据表格 -->
+                <!-- 日志表格 -->
                 <el-card class="table-card">
                     <el-table :data="logTableData" v-loading="logLoading" border stripe>
-                        <el-table-column prop="id" label="ID" width="80" />
+                        <el-table-column prop="id" label="ID" width="80" fixed />
                         <el-table-column prop="changeType" label="变动类型" width="100">
                             <template #default="{ row }">
                                 <el-tag :type="getChangeType(row.changeType).type">
@@ -305,52 +263,27 @@ onMounted(() => {
                         <el-table-column prop="warehouseName" label="仓库" width="120" />
                         <el-table-column prop="productName" label="产品名称" min-width="180" />
                         <el-table-column prop="productSku" label="SKU" width="130" />
-                        <el-table-column
-                            prop="changeQuantity"
-                            label="变动数量"
-                            width="100"
-                            align="right"
-                        >
+                        <el-table-column prop="changeQuantity" label="变动数量" width="100" align="right">
                             <template #default="{ row }">
                                 <span :style="{ color: row.changeQuantity > 0 ? 'green' : 'red' }">
                                     {{ row.changeQuantity > 0 ? '+' : '' }}{{ row.changeQuantity }}
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column
-                            prop="beforeQuantity"
-                            label="变动前"
-                            width="100"
-                            align="right"
-                        />
-                        <el-table-column
-                            prop="afterQuantity"
-                            label="变动后"
-                            width="100"
-                            align="right"
-                        />
+                        <el-table-column prop="beforeQuantity" label="变动前" width="100" align="right" />
+                        <el-table-column prop="afterQuantity" label="变动后" width="100" align="right" />
                         <el-table-column prop="bizType" label="业务类型" width="100" />
                         <el-table-column prop="bizNo" label="业务单号" width="150" />
                         <el-table-column prop="createdAt" label="变动时间" width="180" />
-                        <el-table-column
-                            prop="remark"
-                            label="备注"
-                            min-width="150"
-                            show-overflow-tooltip
-                        />
+                        <el-table-column prop="remark" label="备注" min-width="150" show-overflow-tooltip />
                     </el-table>
 
                     <!-- 分页 -->
                     <div class="pagination">
-                        <el-pagination
-                            v-model:current-page="logSearchForm.page"
-                            v-model:page-size="logSearchForm.size"
-                            :page-sizes="[10, 20, 50, 100]"
-                            :total="logTotal"
-                            layout="total, sizes, prev, pager, next, jumper"
-                            @size-change="handleLogSizeChange"
-                            @current-change="handleLogPageChange"
-                        />
+                        <el-pagination v-model:current-page="logSearchForm.page" v-model:page-size="logSearchForm.size"
+                            :page-sizes="[10, 20, 50, 100]" :total="logTotal"
+                            layout="total, sizes, prev, pager, next, jumper" @size-change="handleLogSizeChange"
+                            @current-change="handleLogPageChange" />
                     </div>
                 </el-card>
             </el-tab-pane>
@@ -359,18 +292,5 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.page-container {
-    padding: 20px;
-}
-
-.search-card,
-.table-card {
-    margin-bottom: 20px;
-}
-
-.pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-}
+/* 页面特定样式（如果需要） */
 </style>

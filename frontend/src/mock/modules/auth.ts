@@ -3,12 +3,17 @@
  */
 import Mock from 'mockjs'
 
+console.log('[Mock Auth] 认证模块已加载')
+
 // 登录
 Mock.mock(/\/api\/auth\/login/, 'post', (options: any) => {
+    console.log('[Mock Auth] 拦截到登录请求:', options.url)
     const body = JSON.parse(options.body)
+    console.log('[Mock Auth] 登录参数:', body)
 
     // 模拟登录验证
     if (body.username === 'admin' && body.password === '123456') {
+        console.log('[Mock Auth] 登录成功')
         return {
             code: 200,
             message: '登录成功',

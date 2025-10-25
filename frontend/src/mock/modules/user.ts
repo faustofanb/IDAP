@@ -10,12 +10,17 @@ const generateUsers = (count: number) => {
     const genders = ['MALE', 'FEMALE', 'UNKNOWN']
 
     for (let i = 1; i <= count; i++) {
+        // 生成符合中国手机号格式的号码 (1[3-9]xxxxxxxxx)
+        const phonePrefix = `1${Mock.Random.integer(3, 9)}`
+        const phoneBody = Mock.Random.string('number', 9)
+        const phone = phonePrefix + phoneBody
+
         users.push({
             id: i,
             username: `user${i}`,
             realName: Mock.Random.cname(),
             email: Mock.Random.email(),
-            phone: /^1[3-9]\d{9}$/,
+            phone,
             gender: Mock.Random.pick(genders),
             avatar: Mock.Random.image('100x100', Mock.Random.color(), '#FFF', 'Avatar'),
             orgId: Mock.Random.integer(1, 10),
@@ -41,8 +46,11 @@ const generateUsers = (count: number) => {
 // 用户列表数据（生成100条）
 let userList = generateUsers(100)
 
+console.log('[Mock User] 用户数据已生成，共', userList.length, '条')
+
 // 查询用户列表
-Mock.mock(/\/api\/users\?.*/, 'get', (options: any) => {
+Mock.mock(/\/api\/users(\?.*)?$/, 'get', (options: any) => {
+    console.log('[Mock User] 拦截到 GET /api/users 请求:', options.url)
     const url = new URL('http://localhost' + options.url)
     const page = parseInt(url.searchParams.get('page') || '1')
     const size = parseInt(url.searchParams.get('size') || '20')
@@ -63,6 +71,8 @@ Mock.mock(/\/api\/users\?.*/, 'get', (options: any) => {
     const start = (page - 1) * size
     const end = start + size
     const records = filteredList.slice(start, end)
+
+    console.log('[Mock User] 返回数据:', { total, size, page, records: records.length })
 
     return {
         code: 200,

@@ -7,41 +7,49 @@
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import './assets/styles/index.css'
 
-// 开发环境启用 Mock 数据
-if (import.meta.env.DEV) {
-    import('./mock')
-}
-
 import App from './App.vue'
 import router from './router'
 import { useUserStore } from './stores/user'
 
-// 创建应用实例
-const app = createApp(App)
+// 开发环境启用 Mock 数据
+async function startApp() {
+    if (import.meta.env.DEV) {
+        await import('./mock')
+        console.log('Mock 服务加载完成')
+    }
 
-// 使用 Pinia
-const pinia = createPinia()
-app.use(pinia)
+    // 创建应用实例
+    const app = createApp(App)
 
-// 恢复用户状态
-const userStore = useUserStore()
-userStore.restoreFromStorage()
+    // 使用 Pinia
+    const pinia = createPinia()
+    app.use(pinia)
 
-// 使用路由
-app.use(router)
+    // 恢复用户状态
+    const userStore = useUserStore()
+    userStore.restoreFromStorage()
 
-// 使用 Element Plus
-app.use(ElementPlus)
+    // 使用路由
+    app.use(router)
 
-// 注册所有 Element Plus 图标
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+    // 使用 Element Plus（配置中文语言）
+    app.use(ElementPlus, {
+        locale: zhCn,
+    })
+
+    // 注册所有 Element Plus 图标
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(key, component)
+    }
+
+    // 挂载应用
+    app.mount('#app')
 }
 
-// 挂载应用
-app.mount('#app')
+startApp()

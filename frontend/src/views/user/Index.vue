@@ -77,10 +77,16 @@ const loadDictData = async () => {
 const loadData = async () => {
     loading.value = true
     try {
+        console.log('[User Page] 开始加载用户列表，参数:', searchForm.value)
         const res = await getUserList(searchForm.value)
-        const data = res.data as any
+        console.log('[User Page] API 响应:', res)
+        // 注意：响应拦截器已经返回了 response.data.data
+        // 所以 res 就是 { records, total, size, current, pages }
+        const data = res as any
+        console.log('[User Page] 解析数据:', data)
         tableData.value = data?.records || []
         total.value = data?.total || 0
+        console.log('[User Page] 表格数据:', tableData.value.length, '条，总数:', total.value)
     } catch (error) {
         console.error('加载用户列表失败:', error)
         ElMessage.error('加载用户列表失败')
@@ -252,29 +258,16 @@ onMounted(() => {
         <el-card class="search-card">
             <el-form :model="searchForm" inline>
                 <el-form-item label="用户名">
-                    <el-input
-                        v-model="searchForm.username"
-                        placeholder="请输入用户名"
-                        clearable
-                        @keyup.enter="handleSearch"
-                    />
+                    <el-input v-model="searchForm.username" placeholder="请输入用户名" clearable
+                        @keyup.enter="handleSearch" />
                 </el-form-item>
                 <el-form-item label="姓名">
-                    <el-input
-                        v-model="searchForm.realName"
-                        placeholder="请输入姓名"
-                        clearable
-                        @keyup.enter="handleSearch"
-                    />
+                    <el-input v-model="searchForm.realName" placeholder="请输入姓名" clearable @keyup.enter="handleSearch" />
                 </el-form-item>
                 <el-form-item label="状态">
                     <el-select v-model="searchForm.status" placeholder="请选择状态" clearable>
-                        <el-option
-                            v-for="item in statusOptions"
-                            :key="item.dictValue"
-                            :label="item.dictLabel"
-                            :value="item.dictValue"
-                        />
+                        <el-option v-for="item in statusOptions" :key="item.dictValue" :label="item.dictLabel"
+                            :value="item.dictValue" />
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -292,7 +285,7 @@ onMounted(() => {
         <!-- 数据表格 -->
         <el-card class="table-card">
             <el-table :data="tableData" v-loading="loading" border stripe>
-                <el-table-column prop="id" label="ID" width="80" />
+                <el-table-column prop="id" label="ID" width="80" fixed />
                 <el-table-column prop="username" label="用户名" width="150" />
                 <el-table-column prop="realName" label="姓名" width="120" />
                 <el-table-column prop="email" label="邮箱" width="200" />
@@ -310,12 +303,7 @@ onMounted(() => {
                         <el-button link type="primary" :icon="Edit" @click="handleEdit(row)">
                             编辑
                         </el-button>
-                        <el-button
-                            link
-                            type="warning"
-                            :icon="Key"
-                            @click="handleResetPassword(row)"
-                        >
+                        <el-button link type="warning" :icon="Key" @click="handleResetPassword(row)">
                             重置密码
                         </el-button>
                         <el-button link type="danger" :icon="Delete" @click="handleDelete(row)">
@@ -327,36 +315,20 @@ onMounted(() => {
 
             <!-- 分页 -->
             <div class="pagination">
-                <el-pagination
-                    v-model:current-page="searchForm.page"
-                    v-model:page-size="searchForm.size"
-                    :page-sizes="[10, 20, 50, 100]"
-                    :total="total"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    @size-change="handleSizeChange"
-                    @current-change="handlePageChange"
-                />
+                <el-pagination v-model:current-page="searchForm.page" v-model:page-size="searchForm.size"
+                    :page-sizes="[10, 20, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper"
+                    @size-change="handleSizeChange" @current-change="handlePageChange" />
             </div>
         </el-card>
 
         <!-- 新增/编辑对话框 -->
-        <el-dialog
-            v-model="dialogVisible"
-            :title="dialogTitle"
-            width="600px"
-            :close-on-click-modal="false"
-        >
+        <el-dialog v-model="dialogVisible" :title="dialogTitle" width="600px" :close-on-click-modal="false">
             <el-form ref="formRef" :model="formData" :rules="rules" label-width="100px">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="formData.username" placeholder="请输入用户名" />
                 </el-form-item>
                 <el-form-item label="密码" prop="password" v-if="!isEdit">
-                    <el-input
-                        v-model="formData.password"
-                        type="password"
-                        placeholder="请输入密码"
-                        show-password
-                    />
+                    <el-input v-model="formData.password" type="password" placeholder="请输入密码" show-password />
                 </el-form-item>
                 <el-form-item label="真实姓名" prop="realName">
                     <el-input v-model="formData.realName" placeholder="请输入真实姓名" />
@@ -369,11 +341,7 @@ onMounted(() => {
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio
-                            v-for="item in statusOptions"
-                            :key="item.dictValue"
-                            :value="item.dictValue"
-                        >
+                        <el-radio v-for="item in statusOptions" :key="item.dictValue" :value="item.dictValue">
                             {{ item.dictLabel }}
                         </el-radio>
                     </el-radio-group>
@@ -386,20 +354,10 @@ onMounted(() => {
         </el-dialog>
 
         <!-- 重置密码对话框 -->
-        <el-dialog
-            v-model="resetPwdDialogVisible"
-            title="重置密码"
-            width="400px"
-            :close-on-click-modal="false"
-        >
+        <el-dialog v-model="resetPwdDialogVisible" title="重置密码" width="400px" :close-on-click-modal="false">
             <el-form :model="resetPwdForm" label-width="100px">
                 <el-form-item label="新密码" required>
-                    <el-input
-                        v-model="resetPwdForm.newPassword"
-                        type="password"
-                        placeholder="请输入新密码"
-                        show-password
-                    />
+                    <el-input v-model="resetPwdForm.newPassword" type="password" placeholder="请输入新密码" show-password />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -411,19 +369,5 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.page-container {
-    padding: 20px;
-}
-
-.search-card,
-.toolbar-card,
-.table-card {
-    margin-bottom: 20px;
-}
-
-.pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-}
+/* 页面特定样式（如果需要） */
 </style>

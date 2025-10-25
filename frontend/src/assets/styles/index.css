@@ -39,3 +39,91 @@ body,
 .el-message-box {
     width: 420px;
 }
+
+/* 全局页面容器样式 */
+.page-container {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+/* 搜索卡片和工具栏 - 固定不滚动 */
+.page-container .search-card,
+.page-container .toolbar-card {
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+/* 表格卡片 - 占据剩余空间 */
+.page-container .table-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.page-container .table-card .el-card__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* 表格自动滚动 */
+.page-container .el-table {
+    flex: 1;
+}
+
+/* 分页栏固定在底部 */
+.page-container .pagination {
+    margin-top: 20px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    border-top: 1px solid #ebeef5;
+}
+
+/* Tabs 页面布局支持 */
+.page-container .el-tabs {
+    flex: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden;
+}
+
+.page-container .el-tabs__content {
+    flex: 1 !important;
+    overflow: hidden !important;
+}
+
+.page-container .el-tab-pane {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+/* Tabs 头部不滚动 */
+.page-container .el-tabs .el-tabs__header {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+}
+
+/* Tabs 内的卡片也遵循布局规则 */
+.page-container .el-tab-pane .search-card,
+.page-container .el-tab-pane .toolbar-card {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+}
+
+.page-container .el-tab-pane .table-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
