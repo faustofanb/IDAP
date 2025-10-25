@@ -1,0 +1,1684 @@
+openapi: 3.0.3
+info:
+  title: IDAP 进销存管理系统 API
+  description: |
+    智能数据询问平台（IDAP）- 进销存多租户 B2B 后台管理系统 RESTful API
+
+    ## 核心特性
+    - 多租户架构：所有请求必须携带租户上下文
+    - JWT 认证：Bearer Token 认证方式
+    - RBAC 权限：基于角色的访问控制
+    - 数据权限：支持全部/机构/机构及下级/仅本人/自定义数据范围
+    - 审计日志：所有操作自动记录审计日志
+
+    ## 请求规范
+    - 所有请求必须包含 `Authorization` 头（除登录接口外）
+    - 所有请求必须包含 `X-Tenant-Id` 头（租户 ID）
+    - 所有请求建议包含 `X-Request-Id` 头（用于链路追踪）
+
+    ## 响应规范
+    - 统一响应格式：`{ code, message, data, timestamp }`
+    - 成功响应：`code = 200`
+    - 业务错误：`code > 200`
+    - 系统错误：`code >= 500`
+
+  version: 1.0.0
+  contact:
+    name: IDAP Team
+    email: contact@idap.example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080/api
+    description: 本地开发环境
+  - url: https://dev-api.idap.example.com/api
+    description: 开发环境
+  - url: https://api.idap.example.com/api
+    description: 生产环境
+
+tags:
+  - name: 认证授权
+    description: 用户登录、登出、Token 刷新
+  - name: 租户管理
+    description: 租户 CRUD、配额管理
+  - name: 组织架构
+    description: 机构/部门管理
+  - name: 用户管理
+    description: 用户 CRUD、密码管理
+  - name: 角色管理
+    description: 角色 CRUD、权限分配
+  - name: 菜单管理
+    description: 菜单 CRUD、树形结构
+  - name: 资源管理
+    description: URL/按钮资源管理
+  - name: 数据字典
+    description: 字典类型与数据管理
+  - name: 仓库管理
+    description: 仓库 CRUD
+  - name: 供应商管理
+    description: 供应商 CRUD
+  - name: 客户管理
+    description: 客户 CRUD
+  - name: 商品管理
+    description: 商品分类、商品 CRUD
+  - name: 库存管理
+    description: 库存查询、库存流水
+  - name: 采购管理
+    description: 采购订单、入库、退货
+  - name: 销售管理
+    description: 销售订单、出库、退货
+  - name: 报表中心
+    description: 库存报表、采销报表
+  - name: 审计日志
+    description: 操作日志查询
+
+# ============================================
+# 安全方案
+# ============================================
+security:
+  - BearerAuth: []
+  - TenantId: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Token 认证
+
+    TenantId:
+      type: apiKey
+      in: header
+      name: X-Tenant-Id
+      description: 租户 ID（多租户隔离）
+
+  # ============================================
+  # 通用响应模型
+  # ============================================
+  schemas:
+    ApiResponse:
+      type: object
+      required:
+        - code
+        - message
+        - timestamp
+      properties:
+        code:
+          type: integer
+          description: 响应码（200=成功，>200=业务错误，>=500=系统错误）
+          example: 200
+        message:
+          type: string
+          description: 响应消息
+          example: 操作成功
+        data:
+          description: 响应数据
+        timestamp:
+          type: integer
+          format: int64
+          description: 时间戳（毫秒）
+          example: 1729857600000
+
+    PageResponse:
+      type: object
+      required:
+        - code
+        - message
+        - data
+        - timestamp
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: 操作成功
+        data:
+          type: object
+          properties:
+            records:
+              type: array
+              description: 数据列表
+              items: {}
+            total:
+              type: integer
+              format: int64
+              description: 总记录数
+              example: 100
+            size:
+              type: integer
+              description: 每页大小
+              example: 20
+            current:
+              type: integer
+              description: 当前页码
+              example: 1
+            pages:
+              type: integer
+              description: 总页数
+              example: 5
+        timestamp:
+          type: integer
+          format: int64
+          example: 1729857600000
+
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - timestamp
+      properties:
+        code:
+          type: integer
+          description: 错误码
+          example: 400
+        message:
+          type: string
+          description: 错误消息
+          example: 参数验证失败
+        data:
+          type: object
+          nullable: true
+          description: 错误详情
+        timestamp:
+          type: integer
+          format: int64
+          example: 1729857600000
+
+    # ============================================
+    # 认证授权模型
+    # ============================================
+    LoginRequest:
+      type: object
+      required:
+        - tenantCode
+        - username
+        - password
+      properties:
+        tenantCode:
+          type: string
+          description: 租户代码
+          example: default
+        username:
+          type: string
+          description: 用户名
+          minLength: 3
+          maxLength: 50
+          example: admin
+        password:
+          type: string
+          format: password
+          description: 密码
+          minLength: 6
+          maxLength: 20
+          example: "123456"
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: 访问令牌（JWT）
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        refreshToken:
+          type: string
+          description: 刷新令牌
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expiresIn:
+          type: integer
+          description: 过期时间（秒）
+          example: 7200
+        userInfo:
+          $ref: "#/components/schemas/UserInfo"
+
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: admin
+        realName:
+          type: string
+          example: 管理员
+        email:
+          type: string
+          format: email
+          example: admin@example.com
+        phone:
+          type: string
+          example: "13800138000"
+        avatar:
+          type: string
+          format: uri
+          example: https://example.com/avatar.jpg
+        tenantId:
+          type: integer
+          format: int64
+          example: 1
+        tenantName:
+          type: string
+          example: 默认租户
+        roles:
+          type: array
+          items:
+            type: string
+          example: ["admin", "manager"]
+        permissions:
+          type: array
+          items:
+            type: string
+          example: ["*:*:*"]
+
+    # ============================================
+    # 租户管理模型
+    # ============================================
+    TenantVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tenantCode:
+          type: string
+          description: 租户代码
+        tenantName:
+          type: string
+          description: 租户名称
+        tenantType:
+          type: string
+          enum: [ENTERPRISE, PERSONAL]
+          description: 租户类型
+        status:
+          type: string
+          enum: [ACTIVE, SUSPENDED, EXPIRED]
+          description: 状态
+        contactName:
+          type: string
+          description: 联系人
+        contactPhone:
+          type: string
+          description: 联系电话
+        contactEmail:
+          type: string
+          format: email
+          description: 联系邮箱
+        expiredAt:
+          type: string
+          format: date-time
+          description: 过期时间
+        maxUsers:
+          type: integer
+          description: 最大用户数
+        maxStorage:
+          type: integer
+          format: int64
+          description: 最大存储空间（字节）
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    TenantCreateRequest:
+      type: object
+      required:
+        - tenantCode
+        - tenantName
+        - contactName
+        - contactPhone
+      properties:
+        tenantCode:
+          type: string
+          minLength: 3
+          maxLength: 50
+        tenantName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        tenantType:
+          type: string
+          enum: [ENTERPRISE, PERSONAL]
+          default: ENTERPRISE
+        contactName:
+          type: string
+        contactPhone:
+          type: string
+        contactEmail:
+          type: string
+          format: email
+        maxUsers:
+          type: integer
+          default: 10
+        maxStorage:
+          type: integer
+          format: int64
+          default: 10737418240
+        remark:
+          type: string
+
+    # ============================================
+    # 用户管理模型
+    # ============================================
+    UserVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        realName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, UNKNOWN]
+        avatar:
+          type: string
+        orgId:
+          type: integer
+          format: int64
+        orgName:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, LOCKED, DISABLED]
+        lastLoginAt:
+          type: string
+          format: date-time
+        lastLoginIp:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoleVO"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UserCreateRequest:
+      type: object
+      required:
+        - username
+        - password
+        - realName
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+        password:
+          type: string
+          format: password
+          minLength: 6
+          maxLength: 20
+        realName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, UNKNOWN]
+          default: UNKNOWN
+        orgId:
+          type: integer
+          format: int64
+        roleIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        remark:
+          type: string
+
+    UserUpdateRequest:
+      type: object
+      properties:
+        realName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        gender:
+          type: string
+          enum: [MALE, FEMALE, UNKNOWN]
+        orgId:
+          type: integer
+          format: int64
+        status:
+          type: string
+          enum: [ACTIVE, LOCKED, DISABLED]
+        roleIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        remark:
+          type: string
+
+    # ============================================
+    # 角色管理模型
+    # ============================================
+    RoleVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        roleCode:
+          type: string
+        roleName:
+          type: string
+        roleType:
+          type: string
+          enum: [SYSTEM, CUSTOM]
+        dataScope:
+          type: string
+          enum: [ALL, ORG, ORG_CHILD, SELF, CUSTOM]
+        sortOrder:
+          type: integer
+        remark:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    # ============================================
+    # 数据字典模型
+    # ============================================
+    DictTypeVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dictCode:
+          type: string
+        dictName:
+          type: string
+        dictType:
+          type: string
+          enum: [SYSTEM, CUSTOM]
+        description:
+          type: string
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+        createdAt:
+          type: string
+          format: date-time
+
+    DictDataVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dictTypeId:
+          type: integer
+          format: int64
+        dictLabel:
+          type: string
+          description: 字典标签（显示值）
+        dictValue:
+          type: string
+          description: 字典键值（实际值）
+        dictSort:
+          type: integer
+          description: 排序
+        tagType:
+          type: string
+          enum: [default, primary, success, info, warning, danger]
+          description: 标签样式
+        isDefault:
+          type: boolean
+          description: 是否默认
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+
+    # ============================================
+    # 商品管理模型
+    # ============================================
+    ProductVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productCode:
+          type: string
+        productName:
+          type: string
+        categoryId:
+          type: integer
+          format: int64
+        categoryName:
+          type: string
+        unit:
+          type: string
+        spec:
+          type: string
+        brand:
+          type: string
+        barcode:
+          type: string
+        imageUrl:
+          type: string
+        purchasePrice:
+          type: number
+          format: decimal
+        salePrice:
+          type: number
+          format: decimal
+        costPrice:
+          type: number
+          format: decimal
+        minStock:
+          type: number
+          format: decimal
+        maxStock:
+          type: number
+          format: decimal
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+        createdAt:
+          type: string
+          format: date-time
+
+    ProductCreateRequest:
+      type: object
+      required:
+        - productCode
+        - productName
+        - unit
+      properties:
+        productCode:
+          type: string
+        productName:
+          type: string
+        categoryId:
+          type: integer
+          format: int64
+        unit:
+          type: string
+        spec:
+          type: string
+        brand:
+          type: string
+        barcode:
+          type: string
+        purchasePrice:
+          type: number
+          format: decimal
+        salePrice:
+          type: number
+          format: decimal
+        minStock:
+          type: number
+          format: decimal
+        remark:
+          type: string
+
+    # ============================================
+    # 库存管理模型
+    # ============================================
+    StockVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        warehouseId:
+          type: integer
+          format: int64
+        warehouseName:
+          type: string
+        productId:
+          type: integer
+          format: int64
+        productCode:
+          type: string
+        productName:
+          type: string
+        quantity:
+          type: number
+          format: decimal
+          description: 当前库存
+        lockedQuantity:
+          type: number
+          format: decimal
+          description: 锁定库存
+        availableQuantity:
+          type: number
+          format: decimal
+          description: 可用库存
+        costPrice:
+          type: number
+          format: decimal
+        lastInAt:
+          type: string
+          format: date-time
+        lastOutAt:
+          type: string
+          format: date-time
+
+    StockLogVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        warehouseName:
+          type: string
+        productCode:
+          type: string
+        productName:
+          type: string
+        logType:
+          type: string
+          enum: [IN, OUT, TRANSFER, ADJUST]
+        quantity:
+          type: number
+          format: decimal
+        beforeQuantity:
+          type: number
+          format: decimal
+        afterQuantity:
+          type: number
+          format: decimal
+        billType:
+          type: string
+        billNo:
+          type: string
+        operatorName:
+          type: string
+        operatedAt:
+          type: string
+          format: date-time
+        remark:
+          type: string
+
+    # ============================================
+    # 采购管理模型
+    # ============================================
+    PurchaseOrderVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        orderNo:
+          type: string
+        supplierId:
+          type: integer
+          format: int64
+        supplierName:
+          type: string
+        warehouseId:
+          type: integer
+          format: int64
+        warehouseName:
+          type: string
+        orderDate:
+          type: string
+          format: date
+        expectedDate:
+          type: string
+          format: date
+        totalAmount:
+          type: number
+          format: decimal
+        discountAmount:
+          type: number
+          format: decimal
+        actualAmount:
+          type: number
+          format: decimal
+        paidAmount:
+          type: number
+          format: decimal
+        status:
+          type: string
+          enum: [DRAFT, PENDING, APPROVED, IN_TRANSIT, COMPLETED, CANCELLED]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PurchaseOrderItemVO"
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    PurchaseOrderItemVO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        productCode:
+          type: string
+        productName:
+          type: string
+        quantity:
+          type: number
+          format: decimal
+        receivedQuantity:
+          type: number
+          format: decimal
+        price:
+          type: number
+          format: decimal
+        amount:
+          type: number
+          format: decimal
+        taxRate:
+          type: number
+          format: decimal
+        taxAmount:
+          type: number
+          format: decimal
+
+    PurchaseOrderCreateRequest:
+      type: object
+      required:
+        - supplierId
+        - warehouseId
+        - orderDate
+        - items
+      properties:
+        supplierId:
+          type: integer
+          format: int64
+        warehouseId:
+          type: integer
+          format: int64
+        orderDate:
+          type: string
+          format: date
+        expectedDate:
+          type: string
+          format: date
+        discountAmount:
+          type: number
+          format: decimal
+          default: 0
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - productId
+              - quantity
+              - price
+            properties:
+              productId:
+                type: integer
+                format: int64
+              quantity:
+                type: number
+                format: decimal
+              price:
+                type: number
+                format: decimal
+              taxRate:
+                type: number
+                format: decimal
+                default: 0
+              remark:
+                type: string
+        remark:
+          type: string
+
+  # ============================================
+  # 通用参数定义
+  # ============================================
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      description: 资源ID
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+    PageParam:
+      name: page
+      in: query
+      description: 页码（从1开始）
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+
+    SizeParam:
+      name: size
+      in: query
+      description: 每页大小
+      schema:
+        type: integer
+        format: int32
+        default: 20
+        minimum: 1
+        maximum: 100
+
+# ============================================
+# API 路径定义
+# ============================================
+paths:
+  # ============================================
+  # 认证授权 API
+  # ============================================
+  /auth/login:
+    post:
+      tags:
+        - 认证授权
+      summary: 用户登录
+      description: 使用租户代码、用户名和密码登录系统
+      operationId: login
+      security: [] # 登录接口不需要认证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: 认证失败
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      tags:
+        - 认证授权
+      summary: 用户登出
+      description: 登出系统，清除 Token
+      operationId: logout
+      responses:
+        "200":
+          description: 登出成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  /auth/refresh:
+    post:
+      tags:
+        - 认证授权
+      summary: 刷新 Token
+      description: 使用 Refresh Token 刷新访问令牌
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        "200":
+          description: 刷新成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                          expiresIn:
+                            type: integer
+
+  /auth/userinfo:
+    get:
+      tags:
+        - 认证授权
+      summary: 获取当前用户信息
+      description: 获取当前登录用户的详细信息
+      operationId: getUserInfo
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/UserInfo"
+
+  # ============================================
+  # 租户管理 API
+  # ============================================
+  /tenants:
+    get:
+      tags:
+        - 租户管理
+      summary: 查询租户列表
+      description: 分页查询租户列表（仅超级管理员）
+      operationId: listTenants
+      parameters:
+        - name: page
+          in: query
+          description: 页码
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: 每页大小
+          schema:
+            type: integer
+            default: 20
+        - name: tenantName
+          in: query
+          description: 租户名称（模糊查询）
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: 状态筛选
+          schema:
+            type: string
+            enum: [ACTIVE, SUSPENDED, EXPIRED]
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+    post:
+      tags:
+        - 租户管理
+      summary: 创建租户
+      description: 创建新租户（仅超级管理员）
+      operationId: createTenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TenantCreateRequest"
+      responses:
+        "200":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/TenantVO"
+
+  /tenants/{id}:
+    get:
+      tags:
+        - 租户管理
+      summary: 获取租户详情
+      operationId: getTenant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/TenantVO"
+
+    put:
+      tags:
+        - 租户管理
+      summary: 更新租户
+      operationId: updateTenant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TenantCreateRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+    delete:
+      tags:
+        - 租户管理
+      summary: 删除租户
+      description: 软删除租户（仅超级管理员）
+      operationId: deleteTenant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  # ============================================
+  # 用户管理 API
+  # ============================================
+  /users:
+    get:
+      tags:
+        - 用户管理
+      summary: 查询用户列表
+      operationId: listUsers
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: username
+          in: query
+          schema:
+            type: string
+        - name: realName
+          in: query
+          schema:
+            type: string
+        - name: orgId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, LOCKED, DISABLED]
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+    post:
+      tags:
+        - 用户管理
+      summary: 创建用户
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateRequest"
+      responses:
+        "200":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/UserVO"
+
+  /users/{id}:
+    get:
+      tags:
+        - 用户管理
+      summary: 获取用户详情
+      operationId: getUser
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/UserVO"
+
+    put:
+      tags:
+        - 用户管理
+      summary: 更新用户
+      operationId: updateUser
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+    delete:
+      tags:
+        - 用户管理
+      summary: 删除用户
+      operationId: deleteUser
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  /users/{id}/reset-password:
+    post:
+      tags:
+        - 用户管理
+      summary: 重置用户密码
+      operationId: resetPassword
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - newPassword
+              properties:
+                newPassword:
+                  type: string
+                  format: password
+                  minLength: 6
+      responses:
+        "200":
+          description: 重置成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  # ============================================
+  # 数据字典 API
+  # ============================================
+  /dict/types:
+    get:
+      tags:
+        - 数据字典
+      summary: 查询字典类型列表
+      operationId: listDictTypes
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: dictName
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+  /dict/data/{dictCode}:
+    get:
+      tags:
+        - 数据字典
+      summary: 根据字典编码获取字典数据
+      description: 前端下拉框、标签显示等场景使用
+      operationId: getDictData
+      parameters:
+        - name: dictCode
+          in: path
+          required: true
+          description: 字典编码（如 user_status）
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DictDataVO"
+
+  /dict/label/{dictCode}/{dictValue}:
+    get:
+      tags:
+        - 数据字典
+      summary: 根据字典值获取标签
+      description: 用于列表显示时翻译字典值
+      operationId: getDictLabel
+      parameters:
+        - name: dictCode
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: dictValue
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          label:
+                            type: string
+                          tagType:
+                            type: string
+
+  # ============================================
+  # 商品管理 API
+  # ============================================
+  /products:
+    get:
+      tags:
+        - 商品管理
+      summary: 查询商品列表
+      operationId: listProducts
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: productName
+          in: query
+          schema:
+            type: string
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, INACTIVE]
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+    post:
+      tags:
+        - 商品管理
+      summary: 创建商品
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductCreateRequest"
+      responses:
+        "200":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ProductVO"
+
+  # ============================================
+  # 库存管理 API
+  # ============================================
+  /stocks:
+    get:
+      tags:
+        - 库存管理
+      summary: 查询库存列表
+      operationId: listStocks
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: warehouseId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: productName
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+  /stocks/logs:
+    get:
+      tags:
+        - 库存管理
+      summary: 查询库存流水
+      operationId: listStockLogs
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: warehouseId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: productId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: logType
+          in: query
+          schema:
+            type: string
+            enum: [IN, OUT, TRANSFER, ADJUST]
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+  # ============================================
+  # 采购管理 API
+  # ============================================
+  /purchase/orders:
+    get:
+      tags:
+        - 采购管理
+      summary: 查询采购订单列表
+      operationId: listPurchaseOrders
+      parameters:
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/SizeParam"
+        - name: orderNo
+          in: query
+          schema:
+            type: string
+        - name: supplierId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [DRAFT, PENDING, APPROVED, IN_TRANSIT, COMPLETED, CANCELLED]
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageResponse"
+
+    post:
+      tags:
+        - 采购管理
+      summary: 创建采购订单
+      operationId: createPurchaseOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PurchaseOrderCreateRequest"
+      responses:
+        "200":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PurchaseOrderVO"
+
+  /purchase/orders/{id}:
+    get:
+      tags:
+        - 采购管理
+      summary: 获取采购订单详情
+      operationId: getPurchaseOrder
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ApiResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PurchaseOrderVO"
+
+    delete:
+      tags:
+        - 采购管理
+      summary: 删除采购订单
+      description: 仅草稿状态可删除
+      operationId: deletePurchaseOrder
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  /purchase/orders/{id}/submit:
+    post:
+      tags:
+        - 采购管理
+      summary: 提交采购订单审核
+      operationId: submitPurchaseOrder
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: 提交成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  /purchase/orders/{id}/approve:
+    post:
+      tags:
+        - 采购管理
+      summary: 审核通过采购订单
+      operationId: approvePurchaseOrder
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remark:
+                  type: string
+      responses:
+        "200":
+          description: 审核通过
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+
+  /purchase/orders/{id}/reject:
+    post:
+      tags:
+        - 采购管理
+      summary: 驳回采购订单
+      operationId: rejectPurchaseOrder
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reason
+              properties:
+                reason:
+                  type: string
+                  description: 驳回原因
+      responses:
+        "200":
+          description: 驳回成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+# ============================================
+# 通用参数定义（已合并到 components）
+# ============================================
