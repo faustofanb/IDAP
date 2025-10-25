@@ -43,9 +43,11 @@ const loadData = async () => {
     loading.value = true
     try {
         const res = await getStockList(searchForm.value)
-        tableData.value = (res.data as any)?.items || []
-        total.value = (res.data as any)?.total || 0
+        const data = res.data as any
+        tableData.value = data?.records || []
+        total.value = data?.total || 0
     } catch (error) {
+        console.error('加载库存列表失败:', error)
         ElMessage.error('加载库存列表失败')
     } finally {
         loading.value = false
@@ -57,9 +59,11 @@ const loadLogData = async () => {
     logLoading.value = true
     try {
         const res = await getStockLogs(logSearchForm.value)
-        logTableData.value = (res.data as any)?.items || []
-        logTotal.value = (res.data as any)?.total || 0
+        const data = res.data as any
+        logTableData.value = data?.records || []
+        logTotal.value = data?.total || 0
     } catch (error) {
+        console.error('加载库存日志失败:', error)
         ElMessage.error('加载库存日志失败')
     } finally {
         logLoading.value = false

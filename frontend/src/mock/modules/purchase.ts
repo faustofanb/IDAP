@@ -107,7 +107,7 @@ Mock.mock(/\/api\/purchase\/orders$/, 'post', (options: any) => {
     const body = JSON.parse(options.body)
 
     const totalAmount = body.items.reduce((sum: number, item: any) => {
-        return sum + (item.quantity * item.price)
+        return sum + item.quantity * item.price
     }, 0)
 
     const actualAmount = totalAmount - (body.discountAmount || 0)

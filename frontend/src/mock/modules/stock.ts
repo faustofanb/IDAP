@@ -42,9 +42,10 @@ const generateStockLogs = (count: number) => {
 
     for (let i = 1; i <= count; i++) {
         const changeType = Mock.Random.pick(changeTypes)
-        const changeQuantity = changeType === 'IN' || changeType === 'ADJUST'
-            ? Mock.Random.integer(10, 200)
-            : -Mock.Random.integer(10, 200)
+        const changeQuantity =
+            changeType === 'IN' || changeType === 'ADJUST'
+                ? Mock.Random.integer(10, 200)
+                : -Mock.Random.integer(10, 200)
         const beforeQuantity = Mock.Random.integer(100, 1000)
         const afterQuantity = beforeQuantity + changeQuantity
 

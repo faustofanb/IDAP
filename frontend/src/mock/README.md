@@ -15,17 +15,20 @@
 ## 模块列表
 
 ### 1. 认证模块 (`modules/auth.ts`)
+
 - `POST /api/auth/login` - 用户登录
 - `POST /api/auth/logout` - 退出登录
 - `POST /api/auth/refresh` - 刷新令牌
 - `GET /api/auth/userinfo` - 获取当前用户信息
 
 **测试账号：**
+
 - 用户名: `admin`
 - 密码: `123456`
 - 租户代码: `default`
 
 ### 2. 用户管理 (`modules/user.ts`)
+
 - `GET /api/users` - 查询用户列表（100条数据）
 - `POST /api/users` - 创建用户
 - `GET /api/users/:id` - 获取用户详情
@@ -34,6 +37,7 @@
 - `POST /api/users/:id/reset-password` - 重置密码
 
 ### 3. 租户管理 (`modules/tenant.ts`)
+
 - `GET /api/tenants` - 查询租户列表（50条数据）
 - `POST /api/tenants` - 创建租户
 - `GET /api/tenants/:id` - 获取租户详情
@@ -41,11 +45,13 @@
 - `DELETE /api/tenants/:id` - 删除租户
 
 ### 4. 数据字典 (`modules/dictionary.ts`)
+
 - `GET /api/dict/types` - 查询字典类型列表
 - `GET /api/dict/data/:dictCode` - 获取字典数据
 - `GET /api/dict/label/:dictCode/:dictValue` - 获取字典标签
 
 **预置字典：**
+
 - `user_status` - 用户状态（正常/锁定/禁用）
 - `user_gender` - 用户性别（男/女/未知）
 - `product_status` - 产品状态（在售/下架/缺货）
@@ -53,6 +59,7 @@
 - `order_status` - 订单状态（草稿/待审核/已审核/运输中/已完成/已取消）
 
 ### 5. 产品管理 (`modules/product.ts`)
+
 - `GET /api/products` - 查询产品列表（200条数据）
 - `POST /api/products` - 创建产品
 - `GET /api/products/:id` - 获取产品详情
@@ -60,10 +67,12 @@
 - `DELETE /api/products/:id` - 删除产品
 
 ### 6. 库存管理 (`modules/stock.ts`)
+
 - `GET /api/stocks` - 查询库存列表（200条数据）
 - `GET /api/stocks/logs` - 查询库存日志（500条数据）
 
 ### 7. 采购管理 (`modules/purchase.ts`)
+
 - `GET /api/purchase/orders` - 查询采购订单列表（100条数据）
 - `POST /api/purchase/orders` - 创建采购订单
 - `GET /api/purchase/orders/:id` - 获取订单详情
@@ -81,7 +90,7 @@ Mock 服务在开发环境下自动启用，无需手动配置。
 ```typescript
 // main.ts
 if (import.meta.env.DEV) {
-  import('./mock') // 自动启用 Mock
+    import('./mock') // 自动启用 Mock
 }
 ```
 
@@ -105,18 +114,24 @@ VITE_API_BASE_URL=http://localhost:8080/api
 ## 数据特点
 
 ### 1. 分页支持
+
 所有列表接口都支持分页参数：
+
 - `page` - 页码（从1开始）
 - `size` - 每页大小（默认20）
 
 ### 2. 搜索过滤
+
 支持多条件搜索过滤，例如：
+
 - 用户列表：`username`、`realName`、`status`
 - 产品列表：`productName`、`categoryId`、`status`
 - 库存日志：`productId`、`warehouseId`、`changeType`
 
 ### 3. 数据真实性
+
 使用 Mock.js 随机函数生成：
+
 - 中文姓名：`Mock.Random.cname()`
 - 手机号：`/^1[3-9]\d{9}$/`
 - 邮箱：`Mock.Random.email()`
@@ -132,12 +147,12 @@ VITE_API_BASE_URL=http://localhost:8080/api
 ```typescript
 // modules/your-module.ts
 Mock.mock(/\/api\/your-endpoint/, 'get', {
-  code: 200,
-  message: '成功',
-  data: {
-    // 你的数据
-  },
-  timestamp: Date.now()
+    code: 200,
+    message: '成功',
+    data: {
+        // 你的数据
+    },
+    timestamp: Date.now()
 })
 ```
 
@@ -153,28 +168,33 @@ import './modules/your-module'
 import Mock from 'mockjs'
 
 const data = Mock.mock({
-  'list|10': [{
-    'id|+1': 1,
-    'name': '@cname',
-    'email': '@email',
-    'age|18-60': 1,
-    'createTime': '@datetime'
-  }]
+    'list|10': [
+        {
+            'id|+1': 1,
+            name: '@cname',
+            email: '@email',
+            'age|18-60': 1,
+            createTime: '@datetime'
+        }
+    ]
 })
 ```
 
 ## 注意事项
 
 ⚠️ **Mock 数据仅用于开发和测试**
+
 - Mock 数据存储在内存中，刷新页面会重置
 - 不要在生产环境中使用 Mock 服务
 - Mock 数据不会持久化到后端
 
 ⚠️ **URL 匹配规则**
+
 - Mock.js 使用正则表达式匹配 URL
 - 注意 URL 参数和路径参数的处理
 
 ⚠️ **响应延迟**
+
 - 当前配置延迟 200-600ms 模拟真实网络
 - 可在 `index.ts` 中调整 `timeout` 配置
 

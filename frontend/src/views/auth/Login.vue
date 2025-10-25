@@ -85,50 +85,23 @@ const handleLogin = async () => {
                 <p class="subtitle">智能数据询问平台 - 进销存管理</p>
             </div>
 
-            <el-form
-                ref="loginFormRef"
-                :model="loginForm"
-                :rules="rules"
-                class="login-form"
-                @keyup.enter="handleLogin"
-            >
+            <el-form ref="loginFormRef" :model="loginForm" :rules="rules" class="login-form" @keyup.enter="handleLogin">
                 <el-form-item prop="tenantCode">
-                    <el-input
-                        v-model="loginForm.tenantCode"
-                        placeholder="租户代码"
-                        size="large"
-                        prefix-icon="OfficeBuilding"
-                    />
+                    <el-input v-model="loginForm.tenantCode" placeholder="租户代码" size="large"
+                        prefix-icon="OfficeBuilding" />
                 </el-form-item>
 
                 <el-form-item prop="username">
-                    <el-input
-                        v-model="loginForm.username"
-                        placeholder="用户名"
-                        size="large"
-                        prefix-icon="User"
-                    />
+                    <el-input v-model="loginForm.username" placeholder="用户名" size="large" prefix-icon="User" />
                 </el-form-item>
 
                 <el-form-item prop="password">
-                    <el-input
-                        v-model="loginForm.password"
-                        type="password"
-                        placeholder="密码"
-                        size="large"
-                        prefix-icon="Lock"
-                        show-password
-                    />
+                    <el-input v-model="loginForm.password" type="password" placeholder="密码" size="large"
+                        prefix-icon="Lock" show-password />
                 </el-form-item>
 
                 <el-form-item>
-                    <el-button
-                        type="primary"
-                        size="large"
-                        :loading="loading"
-                        class="login-button"
-                        @click="handleLogin"
-                    >
+                    <el-button type="primary" size="large" :loading="loading" class="login-button" @click="handleLogin">
                         登 录
                     </el-button>
                 </el-form-item>
