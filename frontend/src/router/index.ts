@@ -95,6 +95,12 @@ const routes: RouteRecordRaw[] = [
                         name: 'Stock',
                         component: () => import('@/views/inventory/Stock.vue'),
                         meta: { title: '库存管理', permission: 'inventory:stock:view' }
+                    },
+                    {
+                        path: '/inventory/product',
+                        name: 'Product',
+                        component: () => import('@/views/product/Index.vue'),
+                        meta: { title: '产品管理', permission: 'inventory:product:view' }
                     }
                 ]
             }
