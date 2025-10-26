@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/request-envelope.json",
+    "title": "RequestEnvelope",
+    "type": "object",
+    "required": [
+        "tenantId",
+        "correlationId",
+        "timestamp",
+        "payload"
+    ],
+    "properties": {
+        "tenantId": {
+            "type": "string",
+            "description": "租户唯一标识"
+        },
+        "correlationId": {
+            "type": "string",
+            "description": "跨服务调用链 ID",
+            "pattern": "^[a-zA-Z0-9-]{16,64}$"
+        },
+        "sessionId": {
+            "type": "string",
+            "description": "WebSocket 会话标识"
+        },
+        "messageType": {
+            "type": "string",
+            "description": "消息类型，如 USER_QUERY、AI_RESPONSE",
+            "minLength": 1
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "signature": {
+            "type": "string",
+            "description": "签名或摘要"
+        },
+        "payload": {
+            "type": "object",
+            "description": "具体业务载荷"
+        },
+        "telemetry": {
+            "type": "object",
+            "description": "延迟、模型版本等遥测字段"
+        }
+    },
+    "additionalProperties": false
+}

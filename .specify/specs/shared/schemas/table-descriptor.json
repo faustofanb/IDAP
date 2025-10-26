@@ -1,0 +1,98 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/table-descriptor.json",
+    "title": "TableDescriptor",
+    "type": "object",
+    "required": [
+        "columns",
+        "rows"
+    ],
+    "properties": {
+        "columns": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "key",
+                    "title",
+                    "valueType"
+                ],
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "valueType": {
+                        "type": "string",
+                        "enum": [
+                            "string",
+                            "number",
+                            "boolean",
+                            "date",
+                            "datetime"
+                        ]
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "format": {
+                        "type": "string"
+                    },
+                    "width": {
+                        "type": "integer",
+                        "minimum": 40
+                    }
+                },
+                "additionalProperties": false
+            },
+            "minItems": 1
+        },
+        "rows": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "每行记录，键应与 columns[key] 对应；为兼容动态列，允许额外属性。",
+                "additionalProperties": true
+            }
+        },
+        "pagination": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "total": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "additionalProperties": false
+        },
+        "sorting": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "string",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

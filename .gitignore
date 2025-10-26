@@ -1,0 +1,10 @@
+target/classes/META-INF/mps/autoMapper
+target/classes/META-INF/mps/autoMappers
+target/classes/META-INF/mps/mappers
+.DS_Store
+target/classes/META-INF/mps/autoMapper
+target/classes/META-INF/mps/autoMappers
+target/classes/META-INF/mps/mappers
+frontend/target/classes/META-INF/mps/autoMapper
+frontend/target/classes/META-INF/mps/autoMappers
+frontend/target/classes/META-INF/mps/mappers

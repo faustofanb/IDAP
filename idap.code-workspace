@@ -1,0 +1,87 @@
+{
+    "folders": [
+        {
+            "name": "idap",
+            "path": "."
+        },
+        {
+            "name": "frontend",
+            "path": "frontend"
+        },
+        {
+            "name": "backed",
+            "path": "backed"
+        }
+    ],
+    "settings": {
+        "files.eol": "\n",
+        "editor.formatOnSave": true,
+        "eslint.workingDirectories": [
+            "frontend/apps/web-antd"
+        ],
+        "stylelint.validate": [
+            "css",
+            "less",
+            "scss",
+            "vue"
+        ],
+        "typescript.tsdk": "frontend/node_modules/typescript/lib",
+        "json.schemas": [
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/request-envelope.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/request-envelope.json"
+            },
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/business-request.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/business-request.json"
+            },
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/sql-request.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/sql-request.json"
+            },
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/insight-payload.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/insight-payload.json"
+            },
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/table-descriptor.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/table-descriptor.json"
+            },
+            {
+                "fileMatch": [
+                    ".specify/specs/shared/schemas/chart-descriptor.json"
+                ],
+                "url": "./.specify/specs/shared/schemas/chart-descriptor.json"
+            }
+        ],
+        "python.testing.pytestEnabled": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.defaultInterpreterPath": "ai/.venv/bin/python",
+        "java.compile.nullAnalysis.mode": "automatic",
+        "maven.view": "hierarchical"
+    },
+    "extensions": {
+        "recommendations": [
+            "dbaeumer.vscode-eslint",
+            "esbenp.prettier-vscode",
+            "stylelint.vscode-stylelint",
+            "Vue.volar",
+            "antfu.iconify",
+            "bradlc.vscode-tailwindcss",
+            "ms-python.python",
+            "streetsidesoftware.code-spell-checker",
+            "github.copilot",
+            "github.vscode-pull-request-github"
+        ]
+    }
+}

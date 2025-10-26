@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/sql-request.json",
+    "title": "SqlRequest",
+    "type": "object",
+    "required": [
+        "statement",
+        "tables",
+        "riskLevel"
+    ],
+    "properties": {
+        "statement": {
+            "type": "string",
+            "description": "受控 SQL 或 DSL 表达式"
+        },
+        "parameters": {
+            "type": "object",
+            "additionalProperties": {
+                "type": [
+                    "string",
+                    "number",
+                    "boolean"
+                ]
+            }
+        },
+        "tables": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "riskLevel": {
+            "type": "string",
+            "enum": [
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+            ]
+        },
+        "requiresApproval": {
+            "type": "boolean",
+            "default": true
+        },
+        "approvalContext": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                },
+                "impact": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

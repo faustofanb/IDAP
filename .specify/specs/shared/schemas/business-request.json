@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/business-request.json",
+    "title": "BusinessRequest",
+    "type": "object",
+    "required": [
+        "intent",
+        "metrics",
+        "filters"
+    ],
+    "properties": {
+        "intent": {
+            "type": "string",
+            "description": "业务意图类别，例如 SALES_OVERVIEW、INVENTORY_ALERT"
+        },
+        "metrics": {
+            "type": "array",
+            "description": "所需指标列表",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "aggregation": {
+                        "type": "string"
+                    },
+                    "unit": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "filters": {
+            "type": "array",
+            "description": "筛选条件",
+            "items": {
+                "type": "object",
+                "required": [
+                    "field",
+                    "operator",
+                    "value"
+                ],
+                "properties": {
+                    "field": {
+                        "type": "string"
+                    },
+                    "operator": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": [
+                            "string",
+                            "number",
+                            "boolean",
+                            "array"
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "timeRange": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "end": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "additionalProperties": false
+        },
+        "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "justification": {
+            "type": "string",
+            "description": "AI 解释或理由"
+        }
+    },
+    "additionalProperties": false
+}

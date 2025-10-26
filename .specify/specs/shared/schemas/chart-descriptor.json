@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/chart-descriptor.json",
+    "title": "ChartDescriptor",
+    "type": "object",
+    "required": [
+        "chartType",
+        "data"
+    ],
+    "properties": {
+        "chartType": {
+            "type": "string",
+            "enum": [
+                "line",
+                "bar",
+                "pie",
+                "scatter",
+                "area"
+            ]
+        },
+        "xField": {
+            "type": "string",
+            "description": "横轴字段名（类目/时间）"
+        },
+        "yFields": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1,
+            "description": "一个或多个数值字段名"
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "每条数据记录；键应与 xField/yFields 对应；允许额外属性以兼容多系列。",
+                "additionalProperties": true
+            }
+        },
+        "options": {
+            "type": "object",
+            "properties": {
+                "stacked": {
+                    "type": "boolean"
+                },
+                "legend": {
+                    "type": "boolean"
+                },
+                "xLabel": {
+                    "type": "string"
+                },
+                "yLabel": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": false
+}
