@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/domain/customer.json",
+    "title": "Customer",
+    "type": "object",
+    "required": [
+        "id",
+        "name"
+    ],
+    "properties": {
+        "id": {
+            "$ref": "../common/id.json"
+        },
+        "name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "contact": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string",
+            "format": "email"
+        },
+        "address": {
+            "$ref": "../common/address.json"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/common/address.json",
+    "title": "Address",
+    "type": "object",
+    "properties": {
+        "country": {
+            "type": "string"
+        },
+        "province": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "district": {
+            "type": "string"
+        },
+        "street": {
+            "type": "string"
+        },
+        "postalCode": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

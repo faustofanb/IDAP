@@ -1,0 +1,32 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/domain/inventory.json",
+    "title": "Inventory",
+    "type": "object",
+    "required": [
+        "productId",
+        "warehouseId",
+        "onHand",
+        "reserved"
+    ],
+    "properties": {
+        "productId": {
+            "$ref": "../common/id.json"
+        },
+        "warehouseId": {
+            "$ref": "../common/id.json"
+        },
+        "onHand": {
+            "type": "number"
+        },
+        "reserved": {
+            "type": "number"
+        },
+        "available": {
+            "type": "number",
+            "description": "只读：onHand - reserved",
+            "readOnly": true
+        }
+    },
+    "additionalProperties": false
+}

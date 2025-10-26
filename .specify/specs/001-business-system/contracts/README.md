@@ -8,16 +8,16 @@
 
 | 契约 | 文件 | 说明 |
 | ---- | ---- | ---- |
-| `RequestEnvelope` | `schemas/request-envelope.json` | WebSocket/REST 通用封包，包含 `tenantId`、`correlationId`、安全签名与遥测。 |
-| `BusinessRequest` | `schemas/business-request.json` | AI 服务返回的业务意图描述，供后端命令处理。 |
-| `SQLRequest` | `schemas/sql-request.json` | AI 服务建议的受托 SQL 意图，满足审批后才可执行。 |
-| `InsightPayload` | `schemas/insight-payload.json` | AI 洞察消息结构，包含洞察文本、可视化描述与来源说明。 |
-| 采购 API | `rest/purchase.yaml` | 采购单 CRUD、审核、导出 OpenAPI 契约。 |
-| 销售 API | `rest/sales.yaml` | 销售单相关接口契约。 |
-| 库存事件 | `events/inventory-low-stock.json` | `inventory.low_stock` 事件模式。 |
-| 单据状态事件 | `events/order-lifecycle.json` | `order.lifecycle.changed` 事件模式。 |
+| `RequestEnvelope` | `../../shared/schemas/request-envelope.json` | WebSocket/REST 通用封包，包含 `tenantId`、`correlationId`、安全签名与遥测。 |
+| `BusinessRequest` | `../../shared/schemas/business-request.json` | AI 服务返回的业务意图描述，供后端命令处理。 |
+| `SQLRequest` | `../../shared/schemas/sql-request.json` | AI 服务建议的受托 SQL 意图，满足审批后才可执行。 |
+| `InsightPayload` | `../../shared/schemas/insight-payload.json` | AI 洞察消息结构，包含洞察文本、可视化描述与来源说明。 |
+| 表格描述 | `../../shared/schemas/table-descriptor.json` | 前端表格渲染描述 Schema。 |
+| 图表描述 | `../../shared/schemas/chart-descriptor.json` | 前端图表渲染描述 Schema。 |
+| 领域对象 | `schemas/domain/*.json` | Product、Warehouse、Supplier、Customer、Inventory、StockMovement、PurchaseOrder、SalesOrder、Uom、Category。 |
+| OpenAPI 契约 | `openapi.yaml` | v1 接口（主数据、单据、库存）定义，含多租户与 JWT。 |
 
-> TODO：初始化时创建空白 Schema，后续实现阶段由任务清单驱动补全。
+> 提示：如需新增领域对象，请在 `schemas/domain/` 下添加 Schema，并在 `openapi.yaml` 的 components.schemas 中引用。
 
 ## 3. 版本管理
 

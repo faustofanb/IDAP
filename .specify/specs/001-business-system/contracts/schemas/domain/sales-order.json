@@ -1,0 +1,72 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/domain/sales-order.json",
+    "title": "SalesOrder",
+    "type": "object",
+    "required": [
+        "id",
+        "customerId",
+        "status",
+        "items"
+    ],
+    "properties": {
+        "id": {
+            "$ref": "../common/id.json"
+        },
+        "customerId": {
+            "$ref": "../common/id.json"
+        },
+        "warehouseId": {
+            "$ref": "../common/id.json"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "DRAFT",
+                "CONFIRMED",
+                "ALLOCATED",
+                "SHIPPED",
+                "COMPLETED",
+                "CANCELLED"
+            ]
+        },
+        "orderDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": [
+                    "productId",
+                    "quantity"
+                ],
+                "properties": {
+                    "productId": {
+                        "$ref": "../common/id.json"
+                    },
+                    "quantity": {
+                        "type": "number"
+                    },
+                    "price": {
+                        "$ref": "../common/money.json"
+                    },
+                    "warehouseId": {
+                        "$ref": "../common/id.json"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "total": {
+            "$ref": "../common/money.json",
+            "readOnly": true
+        },
+        "notes": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,8 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/common/id.json",
+    "title": "Id",
+    "type": "string",
+    "description": "标识符（UUID 或雪花 ID）",
+    "minLength": 8
+}

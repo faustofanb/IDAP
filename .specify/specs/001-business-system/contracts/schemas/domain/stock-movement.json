@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/domain/stock-movement.json",
+    "title": "StockMovement",
+    "type": "object",
+    "required": [
+        "id",
+        "productId",
+        "warehouseId",
+        "quantity",
+        "type",
+        "timestamp"
+    ],
+    "properties": {
+        "id": {
+            "$ref": "../common/id.json"
+        },
+        "productId": {
+            "$ref": "../common/id.json"
+        },
+        "warehouseId": {
+            "$ref": "../common/id.json"
+        },
+        "quantity": {
+            "type": "number"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "INBOUND",
+                "OUTBOUND",
+                "ADJUSTMENT"
+            ]
+        },
+        "reason": {
+            "type": "string"
+        },
+        "referenceType": {
+            "type": "string",
+            "enum": [
+                "PURCHASE_ORDER",
+                "SALES_ORDER",
+                "MANUAL_ADJUST"
+            ]
+        },
+        "referenceId": {
+            "$ref": "../common/id.json"
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time"
+        }
+    },
+    "additionalProperties": false
+}

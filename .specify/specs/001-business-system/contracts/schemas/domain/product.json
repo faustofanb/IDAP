@@ -1,0 +1,52 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://idap.local/schemas/domain/product.json",
+    "title": "Product",
+    "type": "object",
+    "required": [
+        "id",
+        "sku",
+        "name",
+        "uomId"
+    ],
+    "properties": {
+        "id": {
+            "$ref": "../common/id.json"
+        },
+        "sku": {
+            "type": "string",
+            "minLength": 1
+        },
+        "name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "categoryId": {
+            "$ref": "../common/id.json"
+        },
+        "uomId": {
+            "$ref": "../common/id.json"
+        },
+        "price": {
+            "$ref": "../common/money.json"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "ACTIVE",
+                "INACTIVE"
+            ]
+        },
+        "attributes": {
+            "type": "object",
+            "additionalProperties": {
+                "type": [
+                    "string",
+                    "number",
+                    "boolean"
+                ]
+            }
+        }
+    },
+    "additionalProperties": false
+}
